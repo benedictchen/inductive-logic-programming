@@ -5,7 +5,7 @@
 **[💳 DONATE VIA PAYPAL - CLICK HERE](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS)**
 
 [![CI](https://github.com/benedictchen/inductive-logic-programming/workflows/CI/badge.svg)](https://github.com/benedictchen/inductive-logic-programming/actions)
-[![PyPI version](https://badge.fury.io/py/inductive-logic-programming.svg)](https://badge.fury.io/py/inductive-logic-programming)
+[![PyPI version](https://badge.fury.io/py/inductive_logic_programming.svg)](https://badge.fury.io/py/inductive_logic_programming)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Custom%20Non--Commercial-red.svg)](LICENSE)
 
@@ -20,7 +20,7 @@
 ## 📦 Installation
 
 ```bash
-pip install inductive-logic-programming
+pip install inductive_logic_programming
 ```
 
 ## 🚀 Quick Start
