@@ -13,9 +13,9 @@
 
 # Inductive Logic Programming
 
-🌟 Learning interpretable logical rules from examples combining symbolic reasoning with machine learning
+🔍 Learning from examples
 
-**Muggleton, S., & De Raedt, L. (1994)** - "Inductive Logic Programming: Theory and Methods"
+**Muggleton, S. (1991) - "Inductive logic programming"**
 
 ## 📦 Installation
 
@@ -23,11 +23,32 @@
 pip install inductive-logic-programming
 ```
 
+## 🚀 Quick Start
+
+```python
+import inductive_logic_programming
+
+# Example usage
+print("✅ Inductive Logic Programming loaded successfully!")
+```
+
 ## 🎓 About the Implementation
 
 Implemented by **Benedict Chen** - bringing foundational AI research to modern Python.
 
 📧 Contact: benedict@benedictchen.com
+
+## 📖 Citation
+
+If you use this implementation in your research, please cite the original paper:
+
+```bibtex
+Muggleton, S. (1991) - "Inductive logic programming"
+```
+
+## 📜 License
+
+Custom Non-Commercial License with Donation Requirements - See LICENSE file for details.
 
 ---
 
