@@ -28,8 +28,30 @@ pip install inductive-logic-programming
 ```python
 import inductive_logic_programming
 
-# Example usage
-print("✅ Inductive Logic Programming loaded successfully!")
+# Create training examples
+examples = [
+    inductive_logic_programming.Example("parent(tom, bob)", True),
+    inductive_logic_programming.Example("parent(bob, ann)", True), 
+    inductive_logic_programming.Example("parent(tom, liz)", True),
+    inductive_logic_programming.Example("parent(bob, pat)", True),
+    inductive_logic_programming.Example("parent(pat, jim)", True),
+    inductive_logic_programming.Example("grandparent(tom, ann)", True),
+    inductive_logic_programming.Example("grandparent(tom, pat)", True),
+]
+
+# Use FOIL learner to discover rules
+foil = inductive_logic_programming.FOILLearner()
+learned_rules = foil.learn(examples)
+
+print("✅ Learned rules:")
+for rule in learned_rules:
+    print(f"   {rule}")
+
+# Alternative: Use Progol system
+progol = inductive_logic_programming.ProgolSystem()
+progol.set_examples(examples)
+hypothesis = progol.learn()
+print(f"✅ Progol hypothesis: {hypothesis}")
 ```
 
 ## 🎓 About the Implementation
