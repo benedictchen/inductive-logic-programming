@@ -76,6 +76,17 @@ from .ilp_core import (
 # Import all modules for backward compatibility
 from .ilp_modules import *
 
+# Import recovered core algorithms
+# Import module groups - NO FAKE FALLBACKS!
+from . import foil
+from . import progol
+from . import rule_refinement
+
+# Import the main classes directly - NO FAKE FALLBACKS!
+from .foil import FOILLearner
+from .progol import ProgolSystem
+print("✅ Connected to REAL FOIL and Progol implementations!")
+
 __version__ = "2.0.0"
 __author__ = "Benedict Chen"
 
@@ -111,5 +122,14 @@ __all__ = [
     'SemanticEvaluationMixin',
     'RuleRefinementMixin', 
     'CoverageAnalysisMixin',
-    'PredicateSystemMixin'
+    'PredicateSystemMixin',
+    
+    # Core algorithms (if available)
+    'foil',
+    'progol', 
+    'rule_refinement',
+    
+    # Real ILP algorithm classes
+    'FOILLearner',
+    'ProgolSystem'
 ]
