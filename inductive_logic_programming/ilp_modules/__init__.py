@@ -11,11 +11,16 @@ from .hypothesis_generation import HypothesisGenerationMixin
 from .unification_engine import UnificationEngineMixin
 from .semantic_evaluation import SemanticEvaluationMixin, evaluate_semantic_quality, compare_semantic_settings
 from .rule_refinement import RuleRefinementMixin, RuleQualityMetrics, RefinementStats, calculate_rule_significance, generate_refinement_report
+from .coverage_analysis import (CoverageAnalysisMixin, CoverageMetrics, CoverageAnalysisReport, 
+                               calculate_rule_significance as calc_rule_sig, evaluate_coverage_strategy, 
+                               generate_coverage_comparison_report)
 
 __all__ = [
     'LogicalTerm', 'LogicalAtom', 'LogicalClause', 'Example',
     'HypothesisGenerationMixin', 'UnificationEngineMixin', 'SemanticEvaluationMixin',
-    'RuleRefinementMixin', 'RuleQualityMetrics', 'RefinementStats',
+    'RuleRefinementMixin', 'CoverageAnalysisMixin',
+    'RuleQualityMetrics', 'RefinementStats', 'CoverageMetrics', 'CoverageAnalysisReport',
     'evaluate_semantic_quality', 'compare_semantic_settings',
-    'calculate_rule_significance', 'generate_refinement_report'
+    'calculate_rule_significance', 'generate_refinement_report',
+    'calc_rule_sig', 'evaluate_coverage_strategy', 'generate_coverage_comparison_report'
 ]
