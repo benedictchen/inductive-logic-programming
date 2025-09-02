@@ -2,21 +2,27 @@
 
 **🙏 If this library helps your research or project, please consider donating to support continued development:**
 
-**[💳 DONATE VIA PAYPAL - CLICK HERE](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS)**
+<div align="center">
+
+**[💳 DONATE VIA PAYPAL](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS)** | **[❤️ SPONSOR ON GITHUB](https://github.com/sponsors/benedictchen)**
+
+</div>
 
 [![CI](https://github.com/benedictchen/inductive-logic-programming/workflows/CI/badge.svg)](https://github.com/benedictchen/inductive-logic-programming/actions)
 [![PyPI version](https://badge.fury.io/py/inductive-logic-programming.svg)](https://badge.fury.io/py/inductive-logic-programming)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Custom%20Non--Commercial-red.svg)](LICENSE)
+[![Research Accurate](https://img.shields.io/badge/research-accurate-brightgreen.svg)](RESEARCH_FOUNDATION.md)
 
 ---
 
 # Inductive Logic Programming
 
-🧠 FOIL and Progol algorithms for learning logical rules from examples
+🧠 **Learn logical rules from examples using FOIL and Progol algorithms**
 
-**Quinlan, J. R. (1990)** - "Learning logical definitions from relations"  
-**Muggleton, S. (1995)** - "Inverse entailment and Progol"
+Inductive Logic Programming (ILP) automatically discovers logical rules and relationships from examples and background knowledge. This implementation provides research-accurate reproductions of the foundational FOIL and Progol algorithms that revolutionized machine learning by combining logic programming with inductive learning.
+
+**Research Foundation**: Quinlan, J. R. (1990) - *"Learning Logical Definitions from Relations"* | Muggleton, S. (1995) - *"Inverse Entailment and Progol"*
 
 ## 📦 Installation
 
@@ -176,18 +182,115 @@ learned_def = learner.induce_definition(examples, background)
 - **Educational Value**: Clear implementation for learning ILP concepts
 - **Extensible Framework**: Easy to add new learning algorithms
 
+## 📖 Documentation & Tutorials
+
+- 📚 **[Complete Documentation](https://inductive-logic-programming.readthedocs.io/)**
+- 🎓 **[Tutorial Notebooks](https://github.com/benedictchen/inductive-logic-programming/tree/main/tutorials)**
+- 🔬 **[Research Foundation](RESEARCH_FOUNDATION.md)**
+- 🎯 **[Advanced Examples](https://github.com/benedictchen/inductive-logic-programming/tree/main/examples)**
+- 🐛 **[Issue Tracker](https://github.com/benedictchen/inductive-logic-programming/issues)**
+
+## 🤝 Contributing
+
+We welcome contributions! Please see:
+
+- **[Contributing Guidelines](CONTRIBUTING.md)**
+- **[Development Setup](docs/development.md)**  
+- **[Code of Conduct](CODE_OF_CONDUCT.md)**
+
+### Development Installation
+
+```bash
+git clone https://github.com/benedictchen/inductive-logic-programming.git
+cd inductive-logic-programming
+pip install -e ".[test,dev]"
+pytest tests/
+```
+
+## 📜 Citation
+
+If you use this implementation in academic work, please cite:
+
+```bibtex
+@software{inductive_logic_programming_benedictchen,
+    title={Inductive Logic Programming: Research-Accurate Implementation of FOIL and Progol},
+    author={Benedict Chen},
+    year={2025},
+    url={https://github.com/benedictchen/inductive-logic-programming},
+    version={1.1.0}
+}
+
+@article{quinlan1990learning,
+    title={Learning logical definitions from relations},
+    author={Quinlan, J Ross},
+    journal={Machine learning},
+    volume={5},
+    number={3},
+    pages={239--266},
+    year={1990},
+    publisher={Springer}
+}
+```
+
+## 📋 License
+
+**Custom Non-Commercial License with Donation Requirements** - See [LICENSE](LICENSE) file for details.
+
 ## 🎓 About the Implementation
 
-Implemented by **Benedict Chen** - bringing foundational AI research to modern Python.
+**Implemented by Benedict Chen** - Bringing foundational AI research to modern Python.
 
-📧 Contact: benedict@benedictchen.com
+📧 **Contact**: benedict@benedictchen.com  
+🐙 **GitHub**: [@benedictchen](https://github.com/benedictchen)
 
 ---
 
-## 💰 Support This Work - Donation Appreciated!
+## 💰 Support This Work - Choose Your Adventure!
 
 **This implementation represents hundreds of hours of research and development. If you find it valuable, please consider donating:**
 
-**[💳 DONATE VIA PAYPAL - CLICK HERE](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS)**
+### 🎯 Donation Tier Goals (With Logic Programming Humor)
 
-**Your support helps maintain and expand these research implementations! 🙏**
+**☕ $5 - Buy Benedict Coffee**  
+*"Caffeine is like background knowledge - it makes everything else work better! coffee(benedict) :- productive(benedict)."*  
+💳 [PayPal One-time](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS) | ❤️ [GitHub Monthly](https://github.com/sponsors/benedictchen)
+
+**🍕 $25 - Pizza Fund**  
+*"pizza(X) :- hungry(benedict), delicious(X), fast_delivery(X). Query: ?- pizza(margherita)."*  
+💳 [PayPal One-time](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS) | ❤️ [GitHub Monthly](https://github.com/sponsors/benedictchen)
+
+**🏠 $500,000 - Buy Benedict a House**  
+*"house(benedict) :- donation(X), X >= 500000. Currently: house(benedict) :- false. Please help resolve this query!"*  
+💳 [PayPal Challenge](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS) | ❤️ [GitHub Lifetime](https://github.com/sponsors/benedictchen)
+
+**🚀 $10,000,000,000 - Space Program**  
+*"space_program(benedict) :- funding(X), X > 10000000000, zero_gravity(Y), foil_algorithm(Y). Testing FOIL in zero gravity for science!"*  
+💳 [PayPal Cosmic](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS) | ❤️ [GitHub Galactic](https://github.com/sponsors/benedictchen)
+
+### 🎪 Monthly Subscription Tiers (GitHub Sponsors)
+
+**🧠 Logic Programmer ($10/month)** - *"Monthly support for maximum logical consistency in my code!"*  
+❤️ [Subscribe on GitHub](https://github.com/sponsors/benedictchen)
+
+**🔍 Rule Discoverer ($25/month)** - *"Help me discover the rules for sustainable open source development!"*  
+❤️ [Subscribe on GitHub](https://github.com/sponsors/benedictchen)
+
+**👑 Prolog Royalty ($100/month)** - *"Become part of my background knowledge for life success!"*  
+❤️ [Subscribe on GitHub](https://github.com/sponsors/benedictchen)
+
+<div align="center">
+
+**One-time donation?**  
+**[💳 DONATE VIA PAYPAL](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS)**
+
+**Ongoing support?**  
+**[❤️ SPONSOR ON GITHUB](https://github.com/sponsors/benedictchen)**
+
+**Can't decide?**  
+**Why not both?** 🤷‍♂️
+
+</div>
+
+**Every contribution helps me learn the rule: successful_research(benedict) :- funding(adequate), coffee(unlimited), community(supportive). 🚀**
+
+*P.S. - If you help me learn that house rule, I'll name a FOIL refinement operator after you! foil_refinement_operator_[your_name](Rule, ImprovedRule) :- ...*

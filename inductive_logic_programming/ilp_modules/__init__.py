@@ -14,11 +14,12 @@ from .rule_refinement import RuleRefinementMixin, RuleQualityMetrics, Refinement
 from .coverage_analysis import (CoverageAnalysisMixin, CoverageMetrics, CoverageAnalysisReport, 
                                calculate_rule_significance as calc_rule_sig, evaluate_coverage_strategy, 
                                generate_coverage_comparison_report)
+from .predicate_system import PredicateSystemMixin
 
 __all__ = [
     'LogicalTerm', 'LogicalAtom', 'LogicalClause', 'Example',
     'HypothesisGenerationMixin', 'UnificationEngineMixin', 'SemanticEvaluationMixin',
-    'RuleRefinementMixin', 'CoverageAnalysisMixin',
+    'RuleRefinementMixin', 'CoverageAnalysisMixin', 'PredicateSystemMixin',
     'RuleQualityMetrics', 'RefinementStats', 'CoverageMetrics', 'CoverageAnalysisReport',
     'evaluate_semantic_quality', 'compare_semantic_settings',
     'calculate_rule_significance', 'generate_refinement_report',
