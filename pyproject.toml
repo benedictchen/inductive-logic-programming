@@ -32,8 +32,9 @@ Funding = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=
 Sponsor = "https://github.com/sponsors/benedictchen"
 
 [tool.hatch.build.targets.wheel]
-py-modules = ["inductive_logic_programming", "foil", "progol", "rule_refinement"]
+packages = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--cov=inductive_logic_programming", "--cov-report=term-missing"]
+pythonpath = ["src"]
+addopts = ["--cov=src/inductive_logic_programming", "--cov-report=term-missing"]
