@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Coverage Analysis Module Demonstration
-=====================================
+Coverage Analysis Testing
+==========================
 
-This script demonstrates the comprehensive coverage analysis capabilities
-extracted from the main ILP system and organized into a dedicated mixin class.
+Tests for coverage analysis functionality in ILP systems.
+Validates logical clause coverage testing based on Lloyd (1987) SLD resolution.
 """
 
 import sys

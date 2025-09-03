@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """
-🎯 MODULAR ILP SYSTEM DEMONSTRATION
-===================================
+🎯 FAMILY RELATIONSHIPS LEARNING EXAMPLE
+========================================
 
-This script demonstrates the new modular ILP core system, showing how all the
-extracted modules work together seamlessly while maintaining full backward
-compatibility with the original implementation.
+Example implementation of family relationship learning using ILP algorithms.
+Demonstrates FOIL and Progol on classic family domain from ILP literature.
 
-Features Demonstrated:
-- Factory functions for different use cases
-- Complete family relationship learning
-- Advanced query answering and explanation
-- Statistical analysis and coverage metrics
-- All major ILP operations in action
+Research Domain:
+- Family relationship predicates (father, mother, parent, grandfather)
+- Background knowledge (male, female, parent relationships)
+- Rule learning for kinship terms
+- Based on classic ILP family domain examples
 
 Author: Benedict Chen
 """

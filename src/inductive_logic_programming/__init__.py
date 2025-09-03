@@ -162,12 +162,12 @@ from .ilp_core import (
 from .ilp_modules import *
 
 # Import recovered core algorithms
-# Import module groups - NO FAKE FALLBACKS!
+# Import module groups
 from . import foil
 from . import progol
 from . import rule_refinement
 
-# Import the main classes directly - NO FAKE FALLBACKS!
+# Import the main classes directly
 from .foil import FOILLearner
 from .progol import ProgolSystem
 print("✅ Connected to REAL FOIL and Progol implementations!")

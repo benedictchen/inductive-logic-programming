@@ -2,12 +2,12 @@
 🎯 FOIL Comprehensive Configuration
 ===================================================================
 
-This module implements ALL the solutions identified in FOIL FIXME comments
+This module implements configuration options for FOIL algorithm variants
 with complete user configuration control. Users can pick and choose between
 multiple research-accurate approaches.
 
 Author: Benedict Chen (benedict@benedictchen.com)
-Based on: Comprehensive FIXME analysis from foil.py
+Based on: Analysis of FOIL algorithm variants from research literature
 Research Foundation: Quinlan (1990) "Learning logical definitions from relations"
 """
 
@@ -23,7 +23,7 @@ class InformationGainMethod(Enum):
     QUINLAN_ORIGINAL = "quinlan_original"                    # Quinlan (1990) exact formula with bindings
     LAPLACE_CORRECTED = "laplace_corrected"                 # Laplace correction for numerical stability
     MODERN_INFO_THEORY = "modern_info_theory"               # Modern information-theoretic approach
-    EXAMPLE_BASED_APPROXIMATION = "example_approximation"    # Current fake implementation (for testing)
+    EXAMPLE_BASED_APPROXIMATION = "example_approximation"    # Simplified implementation (for comparison)
 
 
 class CoverageTestingMethod(Enum):
@@ -31,7 +31,7 @@ class CoverageTestingMethod(Enum):
     SLD_RESOLUTION = "sld_resolution"                       # Standard SLD resolution for definite clauses
     CONSTRAINT_LOGIC_PROGRAMMING = "clp"                   # CLP for typed variables and constraints
     TABLED_RESOLUTION = "tabled_resolution"                # Tabled resolution with memoization for cycles
-    SIMPLIFIED_UNIFICATION = "simplified_unification"      # Current fake method (for comparison)
+    SIMPLIFIED_UNIFICATION = "simplified_unification"      # Simplified method (for comparison)
 
 
 class VariableBindingStrategy(Enum):
@@ -43,7 +43,7 @@ class VariableBindingStrategy(Enum):
 
 @dataclass 
 class FOILComprehensiveConfig:
-    """Complete user control over all FOIL FIXME solutions"""
+    """Comprehensive configuration for FOIL algorithm variants"""
     
     # Information gain method selection
     information_gain_method: InformationGainMethod = InformationGainMethod.QUINLAN_ORIGINAL

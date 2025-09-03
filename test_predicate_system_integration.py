@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-🔗 PREDICATE SYSTEM INTEGRATION DEMO
-===================================
+🔗 PREDICATE SYSTEM INTEGRATION TESTS
+====================================
 
-This demo shows how the extracted predicate system module would integrate
-with the main ILP system, demonstrating the modular architecture benefits.
+Tests for predicate system integration with ILP algorithms.
+Validates predicate management, type checking, and vocabulary consistency.
 
 Author: Benedict Chen
 """

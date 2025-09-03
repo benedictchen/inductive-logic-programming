@@ -69,7 +69,7 @@ class VariableBinding:
     Represents a variable binding (instantiation) as used in Quinlan (1990).
     
     FOIL operates on variable bindings θ = {X₁/a₁, X₂/a₂, ...}, not just examples.
-    This is the fundamental correction from the fake implementation.
+    This is the key correction from the simplified implementation.
     """
     substitution: Dict[str, str]  # {variable_name: constant_value}
     is_positive: bool  # Whether this binding satisfies positive target
@@ -89,7 +89,7 @@ class VariableBinding:
 
 class ResearchAccurateFOILLearner:
     """
-    Research-accurate FOIL implementation with ALL FIXME solutions implemented.
+    Research-accurate FOIL implementation with all research solutions implemented.
     
     This class provides comprehensive configuration options allowing users to 
     choose between different research-based approaches for each component.
@@ -205,7 +205,7 @@ class ResearchAccurateFOILLearner:
         """
         Learn single clause using research-accurate methods.
         
-        This implements ALL the FIXME solutions for proper clause learning.
+        This implements all the research solutions for proper clause learning.
         """
         # Initialize clause with proper variable structure
         head_arity = self._get_predicate_arity(target_predicate)
@@ -266,7 +266,7 @@ class ResearchAccurateFOILLearner:
         """
         SOLUTION 1: Generate proper variable bindings as in Quinlan (1990).
         
-        This replaces the fake implementation that confused examples with bindings.
+        This corrects the simplified implementation that confused examples with bindings.
         """
         self.learning_statistics['bindings_generated'] += 1
         
@@ -450,7 +450,7 @@ class ResearchAccurateFOILLearner:
         """
         SOLUTION 3: Proper SLD resolution for coverage testing.
         
-        This replaces the fake implementation with real theorem proving.
+        This replaces the simplified implementation with proper theorem proving.
         """
         self.learning_statistics['coverage_tests'] += 1
         self.learning_statistics['sld_resolution_steps'] += 1

@@ -155,7 +155,7 @@ class CompressionEvaluation(Enum):
 @dataclass
 class ProgolComprehensiveConfig:
     """
-    MASTER CONFIGURATION for ALL Progol FIXME solutions.
+    MASTER CONFIGURATION for all Progol research solutions.
     
     Allows users to configure all aspects of Progol's inverse entailment approach.
     """
