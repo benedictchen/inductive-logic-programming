@@ -22,11 +22,10 @@ from typing import Dict, List, Tuple
 from inductive_logic_programming.foil_comprehensive_config import (
     FOILComprehensiveConfig,
     InformationGainMethod,
-    BindingGenerationMethod,
+    VariableBindingStrategy,
     CoverageTestingMethod,
     create_research_accurate_config,
-    create_performance_optimized_config,
-    validate_foil_config
+    create_fast_approximation_config
 )
 
 from inductive_logic_programming.progol_comprehensive_config import (

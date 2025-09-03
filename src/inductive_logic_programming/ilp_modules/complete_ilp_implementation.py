@@ -125,13 +125,13 @@ class CompleteILPImplementation:
     def _specialize_clause(self, clause: Clause, positive_examples: List[Dict],
                           negative_examples: List[Dict], background_knowledge: List[Clause]) -> List[Clause]:
         """
-        🎯 COMPLETE CLAUSE SPECIALIZATION - ALL FIXME SOLUTIONS IMPLEMENTED
+        Clause specialization using multiple refinement operators.
         
-        Implements ALL specialization methods identified in FIXME comments:
-        1. FOIL_ORIGINAL - Quinlan (1990) information gain specialization
-        2. CONSTRAINT_LITERALS - Constraint-based literal addition
-        3. VARIABLE_REFINEMENT - Variable binding and refinement
-        4. HYBRID_SPECIALIZATION - Combining multiple approaches
+        Specialization methods from ILP literature:
+        1. FOIL_ORIGINAL - Quinlan (1990) information gain for literal selection
+        2. CONSTRAINT_LITERALS - Constraint-guided literal addition  
+        3. VARIABLE_REFINEMENT - Variable binding constraints
+        4. HYBRID_SPECIALIZATION - Combined approach
         
         Args:
             clause: Clause to specialize
@@ -332,13 +332,13 @@ class CompleteILPImplementation:
     def _generalize_clause(self, clause: Clause, positive_examples: List[Dict],
                           negative_examples: List[Dict]) -> List[Clause]:
         """
-        🎯 COMPLETE CLAUSE GENERALIZATION - ALL FIXME SOLUTIONS IMPLEMENTED
+        Clause generalization using refinement operators.
         
-        Implements ALL generalization methods identified in FIXME comments:
-        1. REMOVE_LITERALS - Muggleton (1994) literal removal generalization
-        2. VARIABLE_GENERALIZATION - Variable substitution generalization  
-        3. PREDICATE_ABSTRACTION - Predicate hierarchy climbing
-        4. HYBRID_GENERALIZATION - Combining multiple approaches
+        Generalization methods from ILP literature:
+        1. REMOVE_LITERALS - Literal deletion (Muggleton & De Raedt, 1994)
+        2. VARIABLE_GENERALIZATION - Variable substitution patterns
+        3. PREDICATE_ABSTRACTION - Predicate hierarchy traversal
+        4. HYBRID_GENERALIZATION - Combined refinement operators
         
         Args:
             clause: Clause to generalize
@@ -520,13 +520,13 @@ class CompleteILPImplementation:
     
     def _unify_atoms(self, atom1: Atom, atom2: Atom) -> Optional[Substitution]:
         """
-        🎯 COMPLETE UNIFICATION - ALL FIXME SOLUTIONS IMPLEMENTED
+        Unification algorithms for logical atoms.
         
-        Implements ALL unification methods identified in FIXME comments:
-        1. ROBINSON_BASIC - Robinson (1965) basic unification algorithm
+        Unification methods from logic programming literature:
+        1. ROBINSON_BASIC - Robinson (1965) unification without occurs check
         2. ROBINSON_OCCURS_CHECK - Robinson (1965) with occurs check
-        3. TYPE_AWARE - Type-aware unification with constraints
-        4. HYBRID_UNIFICATION - Combining multiple strategies
+        3. TYPE_AWARE - Type-constrained unification
+        4. HYBRID_UNIFICATION - Combined unification strategies
         
         Args:
             atom1: First atom to unify

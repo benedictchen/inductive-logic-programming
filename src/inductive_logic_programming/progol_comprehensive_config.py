@@ -108,7 +108,7 @@ production_config = ProgolConfig(
 • Hybrid approaches: Adaptive to problem characteristics
 
 🙏 Support This Work:
-If this Progol configuration system advanced your research, please consider:
+If this Progol configuration system helped your research, please consider:
 🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
 💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
 

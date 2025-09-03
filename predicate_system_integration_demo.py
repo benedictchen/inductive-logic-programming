@@ -353,7 +353,7 @@ def main():
         demo_business_domain()
         demo_theta_subsumption()
         
-        print("\n🎉 INTEGRATION DEMO COMPLETED SUCCESSFULLY!")
+        print("\n🎉 Integration demo complete")
         print("=" * 70)
         print("✅ Predicate system seamlessly integrates with ILP")
         print("✅ Modular architecture enables domain flexibility")

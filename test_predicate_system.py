@@ -464,7 +464,7 @@ def run_all_tests():
         test_advanced_features()
         demonstrate_practical_usage()
         
-        print("\n🎉 ALL TESTS COMPLETED SUCCESSFULLY!")
+        print("\n🎉 Predicate system testing complete")
         print("=" * 70)
         print("✅ Predicate system module is working correctly")
         print("✅ All key features validated")

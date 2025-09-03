@@ -1,8 +1,8 @@
 """
-🎯 FOIL RESEARCH-ACCURATE - Alternative Implementation Module
+🎯 FOIL QUINLAN 1990 IMPLEMENTATION
 ============================================================
 
-Research-validated FOIL implementation with mathematically correct algorithms.
+FOIL implementation following Quinlan (1990) specifications.
 
 🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
    benedict@benedictchen.com
@@ -12,7 +12,7 @@ Research-validated FOIL implementation with mathematically correct algorithms.
 📚 Research Foundation:
 - Quinlan, J.R. (1990). "Learning logical definitions from relations." 
   Machine Learning, 5(3), 239-266.
-- Provides mathematically correct implementations matching the original paper
+- Follows Section 3.2 information gain formula and variable binding framework
 
 🎯 ELI5 Explanation:
 This is like having a "reference implementation" of FOIL - a version that
@@ -23,7 +23,7 @@ their results match Quinlan's original algorithm specifications.
 
 🔧 Key Features:
 • Exact Quinlan (1990) formula implementation
-• Research-validated variable binding generation
+• Variable binding generation from Quinlan's θ-substitution framework
 • Proper SLD resolution for coverage testing
 • Mathematical correctness over performance optimization
 
