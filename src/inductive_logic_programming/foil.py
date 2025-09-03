@@ -106,13 +106,13 @@ using a covering approach with information gain heuristics.
 #      ```python
 #      def covers_example_sld(self, clause: LogicalClause, example: Example, 
 #                           background_kb: List[LogicalClause]) -> bool:
-#          """Proper coverage testing using SLD resolution for definite clauses"""
+#          # Proper coverage testing using SLD resolution for definite clauses
 #          goal = example.atom
 #          return self.sld_resolution(clause, goal, background_kb) is not None
 #      
 #      def sld_resolution(self, clause: LogicalClause, goal: LogicalAtom, 
 #                        background_kb: List[LogicalClause]) -> Optional[Dict[str, str]]:
-#          """SLD Resolution for definite clauses - returns substitution if provable"""
+#          # SLD Resolution for definite clauses - returns substitution if provable
 #          goals = [goal]
 #          substitution = {}
 #          max_steps = 100  # Prevent infinite loops
@@ -150,7 +150,7 @@ using a covering approach with information gain heuristics.
 #          return None  # Timeout
 #      
 #      def apply_substitution(self, atom: LogicalAtom, substitution: Dict[str, str]) -> LogicalAtom:
-#          """Apply variable substitution θ to atom"""
+#          # Apply variable substitution θ to atom
 #          new_terms = []
 #          for term in atom.terms:
 #              if term.term_type == 'variable' and term.name in substitution:
@@ -516,7 +516,7 @@ class FOILLearner:
         #      
         #      def calculate_foil_gain_proper(self, literal: LogicalAtom, partial_rule: LogicalClause,
         #                                    examples: List[Example]) -> float:
-        #          """Proper FOIL gain using variable bindings, not examples"""
+        #          # Proper FOIL gain using variable bindings, not examples
         #          # Generate bindings for partial rule
         #          bindings_before = self.generate_variable_bindings(partial_rule, examples)
         #          
@@ -540,7 +540,7 @@ class FOILLearner:
         #          return t * (new_info - old_info)
         #      
         #      def generate_variable_bindings(self, clause: LogicalClause, examples: List[Example]) -> List[VariableBinding]:
-        #          """Generate all variable instantiations that satisfy clause"""
+        #          # Generate all variable instantiations that satisfy clause
         #          bindings = []
         #          variables = self.extract_variables(clause)
         #          constants = list(self.constants)

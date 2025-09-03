@@ -799,24 +799,176 @@ class SemanticEvaluationMixin(ABC):
     
     def _specialize_clause(self, clause: LogicalClause, negative_examples: List[Example]) -> List[LogicalClause]:
         """
-        Base specialization method - should be implemented by the main ILP class
-        This method should provide domain-independent clause specialization
+        ✅ COMPLETE IMPLEMENTATION - Clause Specialization with Multiple Algorithms
+        
+        Uses CompleteILPImplementation to provide research-backed specialization:
+        - FOIL_ORIGINAL: Quinlan (1990) information gain specialization
+        - CONSTRAINT_LITERALS: Constraint-based literal addition
+        - VARIABLE_REFINEMENT: Variable binding refinement
+        - HYBRID_SPECIALIZATION: Combined approach
+        
+        Configured via self.config.specialization_method
         """
-        raise NotImplementedError("Must be implemented by the main ILP class")
+        from .complete_ilp_implementation import CompleteILPImplementation, Clause, Atom
+        
+        # Initialize complete ILP implementation with current config
+        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        
+        # Convert LogicalClause to internal Clause format
+        internal_clause = self._convert_logical_clause_to_internal(clause)
+        
+        # Convert examples to internal format
+        pos_examples = [self._convert_example_to_dict(ex) for ex in getattr(self, 'positive_examples', [])]
+        neg_examples = [self._convert_example_to_dict(ex) for ex in negative_examples]
+        
+        # Get background knowledge
+        background = getattr(self, 'background_knowledge', [])
+        
+        # Apply specialization using complete implementation
+        specialized_internal = complete_ilp._specialize_clause(
+            internal_clause, pos_examples, neg_examples, background
+        )
+        
+        # Convert back to LogicalClause format
+        specialized_clauses = [self._convert_internal_to_logical_clause(c) for c in specialized_internal]
+        
+        return specialized_clauses
     
     def _generalize_clause(self, clause: LogicalClause, positive_examples: List[Example]) -> List[LogicalClause]:
         """
-        Base generalization method - should be implemented by the main ILP class
-        This method should provide domain-independent clause generalization
+        ✅ COMPLETE IMPLEMENTATION - Clause Generalization with Multiple Approaches
+        
+        Uses CompleteILPImplementation to provide research-backed generalization:
+        - REMOVE_LITERALS: Muggleton (1994) literal removal
+        - VARIABLE_GENERALIZATION: Variable substitution generalization
+        - PREDICATE_ABSTRACTION: Predicate hierarchy climbing
+        - HYBRID_GENERALIZATION: Combined approach
+        
+        Configured via self.config.generalization_method
         """
-        raise NotImplementedError("Must be implemented by the main ILP class")
+        from .complete_ilp_implementation import CompleteILPImplementation, Clause, Atom
+        
+        # Initialize complete ILP implementation with current config
+        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        
+        # Convert LogicalClause to internal format
+        internal_clause = self._convert_logical_clause_to_internal(clause)
+        
+        # Convert examples to internal format
+        pos_examples = [self._convert_example_to_dict(ex) for ex in positive_examples]
+        neg_examples = [self._convert_example_to_dict(ex) for ex in getattr(self, 'negative_examples', [])]
+        
+        # Apply generalization using complete implementation
+        generalized_internal = complete_ilp._generalize_clause(
+            internal_clause, pos_examples, neg_examples
+        )
+        
+        # Convert back to LogicalClause format
+        generalized_clauses = [self._convert_internal_to_logical_clause(c) for c in generalized_internal]
+        
+        return generalized_clauses
     
     def _unify_atoms(self, atom1: LogicalAtom, atom2: LogicalAtom, substitution: Dict[str, LogicalTerm]) -> bool:
         """
-        Atom unification method - should be implemented by the main ILP class
-        This method should implement Robinson's unification algorithm
+        ✅ COMPLETE IMPLEMENTATION - Robinson's Unification with Multiple Variants
+        
+        Uses CompleteILPImplementation to provide research-backed unification:
+        - ROBINSON_BASIC: Robinson (1965) basic unification algorithm
+        - ROBINSON_OCCURS_CHECK: Robinson (1965) with occurs check
+        - TYPE_AWARE: Type-aware unification with constraints
+        - HYBRID_UNIFICATION: Combined strategy approach
+        
+        Configured via self.config.unification_method
         """
-        raise NotImplementedError("Must be implemented by the main ILP class")
+        from .complete_ilp_implementation import CompleteILPImplementation, Atom, Substitution
+        
+        # Initialize complete ILP implementation with current config
+        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        
+        # Convert LogicalAtoms to internal Atom format
+        internal_atom1 = self._convert_logical_atom_to_internal(atom1)
+        internal_atom2 = self._convert_logical_atom_to_internal(atom2)
+        
+        # Apply unification using complete implementation
+        unification_result = complete_ilp._unify_atoms(internal_atom1, internal_atom2)
+        
+        if unification_result is None:
+            return False
+        
+        # Apply the substitution to the provided substitution dict
+        for var, term in unification_result.mapping.items():
+            substitution[var] = self._convert_string_to_logical_term(term)
+        
+        return True
+    
+    # ===== DATA FORMAT CONVERSION HELPERS =====
+    
+    def _convert_logical_clause_to_internal(self, logical_clause: LogicalClause) -> 'Clause':
+        """Convert LogicalClause to internal Clause format"""
+        from .complete_ilp_implementation import Clause, Atom
+        
+        # Convert head
+        head_atom = Atom(
+            predicate=logical_clause.head.predicate,
+            terms=[str(term) for term in logical_clause.head.terms],
+            negated=False
+        )
+        
+        # Convert body atoms
+        body_atoms = []
+        if hasattr(logical_clause, 'body') and logical_clause.body:
+            for atom in logical_clause.body:
+                body_atom = Atom(
+                    predicate=atom.predicate,
+                    terms=[str(term) for term in atom.terms],
+                    negated=getattr(atom, 'negated', False)
+                )
+                body_atoms.append(body_atom)
+        
+        return Clause(head_atom, body_atoms)
+    
+    def _convert_internal_to_logical_clause(self, internal_clause: 'Clause') -> LogicalClause:
+        """Convert internal Clause to LogicalClause format"""
+        # Convert head
+        head_terms = [LogicalTerm(name=term, type='variable' if term[0].isupper() else 'constant')
+                     for term in internal_clause.head.terms]
+        head_atom = LogicalAtom(internal_clause.head.predicate, head_terms)
+        
+        # Convert body
+        body_atoms = []
+        for atom in internal_clause.body:
+            terms = [LogicalTerm(name=term, type='variable' if term[0].isupper() else 'constant')
+                    for term in atom.terms]
+            body_atom = LogicalAtom(atom.predicate, terms)
+            if atom.negated:
+                body_atom.negated = True
+            body_atoms.append(body_atom)
+        
+        return LogicalClause(head_atom, body_atoms)
+    
+    def _convert_logical_atom_to_internal(self, logical_atom: LogicalAtom) -> 'Atom':
+        """Convert LogicalAtom to internal Atom format"""
+        from .complete_ilp_implementation import Atom
+        
+        return Atom(
+            predicate=logical_atom.predicate,
+            terms=[str(term) for term in logical_atom.terms],
+            negated=getattr(logical_atom, 'negated', False)
+        )
+    
+    def _convert_example_to_dict(self, example: Example) -> Dict:
+        """Convert Example to dictionary format"""
+        if hasattr(example, 'to_dict'):
+            return example.to_dict()
+        elif hasattr(example, '__dict__'):
+            return example.__dict__
+        else:
+            return {'example': str(example)}
+    
+    def _convert_string_to_logical_term(self, term_str: str) -> LogicalTerm:
+        """Convert string to LogicalTerm"""
+        term_type = 'variable' if term_str[0].isupper() else 'constant'
+        return LogicalTerm(name=term_str, type=term_type)
 
 
 # Utility functions for semantic evaluation
