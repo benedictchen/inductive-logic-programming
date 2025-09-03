@@ -17,16 +17,16 @@ def _print_attribution():
         print("   benedict@benedictchen.com")
         print("   Support: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS")
 
-from .inductive_logic_programming import (
+from .src.inductive_logic_programming import (
     InductiveLogicProgrammer,
     LogicalTerm,
     LogicalAtom,
     LogicalClause,
     Example
 )
-from .foil import FOILLearner, FOILStatistics
-from .progol import ProgolSystem, ProgolSettings, ProgolStatistics
-from .rule_refinement import RuleRefinement, RefinementOperator, SpecializationOperator, GeneralizationOperator
+from .src.inductive_logic_programming.foil import FOILLearner, FOILStatistics
+from .src.inductive_logic_programming.progol import ProgolSystem, ProgolSettings, ProgolStatistics
+from .src.inductive_logic_programming.rule_refinement import RuleRefinement, RefinementOperator, SpecializationOperator, GeneralizationOperator
 
 # Show attribution on library import
 _print_attribution()

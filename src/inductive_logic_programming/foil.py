@@ -4,6 +4,173 @@ Based on: Quinlan (1990) "Learning logical definitions from relations"
 
 FOIL is a classic ILP algorithm that learns first-order Horn clauses
 using a covering approach with information gain heuristics.
+
+# FIXME: Critical Research Accuracy Issues Based on Quinlan (1990) FOIL Paper
+#
+# 1. INCORRECT INFORMATION GAIN FORMULA IMPLEMENTATION
+#    - Quinlan's exact formula: FOIL_Gain(L,R) = t × (log₂(p₁/(p₁+n₁)) - log₂(p₀/(p₀+n₀)))
+#    - Current implementation has approximation but misses key details:
+#      * t = number of positive bindings for literal L that extend rule R
+#      * p₀,n₀ = positive/negative bindings before adding literal L
+#      * p₁,n₁ = positive/negative bindings after adding literal L
+#    - Missing proper binding count (tuples that satisfy the partially-constructed rule)
+#    - Research basis: Quinlan (1990) Section 3.2 "The learning algorithm", pages 245-247
+#    - Solutions:
+#      a) Implement proper binding enumeration for literals in first-order logic
+#      b) Count variable instantiations that satisfy partial rules, not just examples
+#      c) Use exact FOIL gain: gain = t * (log2(p1/(p1+n1)) - log2(p0/(p0+n0)))
+#      d) Handle binding multiplicities when variables are shared between literals
+#    - Example:
+#      ```python
+#      def calculate_foil_gain(self, literal, partial_rule, bindings_before, bindings_after):
+#          t = len([b for b in bindings_after if b.is_positive])  # Positive bindings
+#          p0, n0 = count_pos_neg_bindings(bindings_before)
+#          p1, n1 = count_pos_neg_bindings(bindings_after)
+#          return t * (log2(p1/(p1+n1)) - log2(p0/(p0+n0)))
+#      ```
+#
+# 2. MISSING PROPER FIRST-ORDER VARIABLE BINDING MECHANISM
+#    - FOIL operates on variable bindings (instantiations), not just examples
+#    - Current implementation conflates examples with bindings
+#    - Missing: θ-subsumption and proper unification for generating bindings
+#    - Missing: handling of shared variables between literals in clause body
+#    - Research basis: Quinlan (1990) Section 2 "Terminology", pages 241-244
+#    - Solutions:
+#      a) Implement binding generation: enumerate all variable instantiations that satisfy partial rule
+#      b) Track bindings as tuples: θ = {X₁/a₁, X₂/a₂, ...} for variables Xᵢ and constants aᵢ
+#      c) Maintain consistency when adding literals: new literal must be satisfiable under existing bindings
+#      d) Implement θ-subsumption test for clause generality
+#    - Example:
+#      ```python
+#      def generate_bindings(self, partial_clause):
+#          bindings = []
+#          for substitution in self.enumerate_substitutions(partial_clause):
+#              if self.satisfies_background_knowledge(substitution, partial_clause):
+#                  bindings.append(substitution)
+#          return bindings
+#      ```
+#
+# 3. INADEQUATE LITERAL GENERATION STRATEGY
+#    - Quinlan's FOIL uses systematic literal generation based on background predicates
+#    - Missing proper mode declarations (input/output argument specifications)
+#    - No implementation of "determinate literals" (functional dependencies)
+#    - Missing constraint on literal generation based on typing and shared variables
+#    - Research basis: Quinlan (1990) Section 3.3 "Constructing literals", pages 247-249
+#    - Solutions:
+#      a) Implement mode declarations: +type (input), -type (output), #type (constant)
+#      b) Add determinate literal detection: literals that determine values of other variables
+#      c) Use background knowledge structure for guided literal generation
+#      d) Implement variable typing constraints to avoid meaningless literals
+#    - Example:
+#      ```python
+#      def generate_literals_with_modes(self, current_clause, mode_declarations):
+#          literals = []
+#          for predicate, modes in mode_declarations.items():
+#              for mode in modes:
+#                  if self.is_valid_literal_for_mode(current_clause, predicate, mode):
+#                      literals.extend(self.instantiate_literal(predicate, mode, current_clause.variables))
+#          return literals
+#      ```
+#
+# 4. MISSING PROPER PRUNING AND COMPLEXITY CONTROL
+#    - Quinlan's FOIL includes sophisticated pruning based on encoding length
+#    - Missing: minimum description length (MDL) principle for clause selection
+#    - No implementation of significance testing for literal addition
+#    - Missing clause subsumption checking to avoid redundant rules
+#    - Research basis: Quinlan (1990) Section 3.4 "Pruning", pages 249-251
+#    - Solutions:
+#      a) Implement encoding length calculation: L(H) + L(D|H) where H=hypothesis, D=data
+#      b) Add significance testing: reject literals that don't significantly improve coverage
+#      c) Implement clause subsumption: remove redundant or overly general clauses
+#      d) Use cross-validation or separate test set for pruning decisions
+#    - Example:
+#      ```python
+#      def calculate_encoding_length(self, clause, examples):
+#          hypothesis_length = len(clause.body) * log2(len(self.predicates))  # Simplified
+#          error_length = sum(1 for ex in examples if not self.covers(clause, ex))
+#          return hypothesis_length + error_length
+#      ```
+#
+# 5. INCORRECT COVERAGE TESTING AND THEOREM PROVING
+#    - Current coverage testing is oversimplified (only checks predicate existence)
+#    - FOIL requires proper theorem proving to determine if clause covers example
+#    - Missing: SLD resolution for definite clause coverage testing
+#    - Missing: integration with background knowledge during coverage computation
+#    - Research basis: Quinlan (1990) Section 2.3 "Covering", pages 243-244
+#    - Solutions:
+#      a) Implement SLD resolution for definite clauses
+#      b) Integrate background knowledge facts and rules in coverage computation
+#      c) Handle negation as failure properly (closed-world assumption)
+#      d) Implement efficient indexing for fast coverage testing
+#    - CODE REVIEW SUGGESTION - Replace oversimplified coverage with proper SLD resolution:
+#      ```python
+#      def covers_example_sld(self, clause: LogicalClause, example: Example, 
+#                           background_kb: List[LogicalClause]) -> bool:
+#          """Proper coverage testing using SLD resolution for definite clauses"""
+#          goal = example.atom
+#          return self.sld_resolution(clause, goal, background_kb) is not None
+#      
+#      def sld_resolution(self, clause: LogicalClause, goal: LogicalAtom, 
+#                        background_kb: List[LogicalClause]) -> Optional[Dict[str, str]]:
+#          """SLD Resolution for definite clauses - returns substitution if provable"""
+#          goals = [goal]
+#          substitution = {}
+#          max_steps = 100  # Prevent infinite loops
+#          
+#          for step in range(max_steps):
+#              if not goals:
+#                  return substitution  # Success - all goals resolved
+#              
+#              current_goal = goals.pop(0)  # Leftmost selection rule
+#              resolver_clause = None
+#              unification = {}
+#              
+#              # Try main clause first
+#              if self.unify_atoms(current_goal, clause.head, unification.copy()):
+#                  resolver_clause = clause
+#                  resolver_substitution = unification
+#              else:
+#                  # Try background knowledge
+#                  for bg_clause in background_kb:
+#                      unification_attempt = {}
+#                      if self.unify_atoms(current_goal, bg_clause.head, unification_attempt):
+#                          resolver_clause = bg_clause
+#                          resolver_substitution = unification_attempt
+#                          break
+#              
+#              if resolver_clause is None:
+#                  return None  # Failure - no clause can resolve current goal
+#              
+#              # Apply substitution and add body literals as new goals
+#              substitution.update(resolver_substitution)
+#              new_goals = [self.apply_substitution(lit, resolver_substitution) 
+#                          for lit in resolver_clause.body]
+#              goals = new_goals + goals
+#          
+#          return None  # Timeout
+#      
+#      def apply_substitution(self, atom: LogicalAtom, substitution: Dict[str, str]) -> LogicalAtom:
+#          """Apply variable substitution θ to atom"""
+#          new_terms = []
+#          for term in atom.terms:
+#              if term.term_type == 'variable' and term.name in substitution:
+#                  new_terms.append(LogicalTerm(name=substitution[term.name], term_type='constant'))
+#              else:
+#                  new_terms.append(term)
+#          return LogicalAtom(predicate=atom.predicate, terms=new_terms, negated=atom.negated)
+#      ```
+#
+# 6. MISSING NOISE HANDLING AND STATISTICAL VALIDATION
+#    - Quinlan's FOIL includes noise handling through statistical significance testing
+#    - Missing: χ² test for literal significance
+#    - No handling of inconsistent examples or noisy data
+#    - Missing: confidence intervals for learned rules
+#    - Research basis: Quinlan (1990) Section 4 "Experiments", pages 251-261
+#    - Solutions:
+#      a) Implement χ² significance test for literal addition
+#      b) Add noise tolerance parameters and exception handling
+#      c) Use Laplace correction for probability estimates
+#      d) Implement statistical confidence measures for learned clauses
 """
 
 import numpy as np
@@ -12,7 +179,7 @@ from dataclasses import dataclass
 import logging
 from itertools import product, combinations
 
-from .inductive_logic_programming import (
+from .ilp_core import (
     LogicalTerm, LogicalAtom, LogicalClause, Example,
     InductiveLogicProgrammer
 )
@@ -324,6 +491,81 @@ class FOILLearner:
                                   neg_examples: List[Example]) -> float:
         """
         Calculate information gain from adding a literal
+        
+        # FIXME: Critical Error in FOIL Information Gain Implementation
+        #
+        # 1. WRONG INTERPRETATION OF QUINLAN'S FORMULA
+        #    - Current: treats examples as the unit of measurement
+        #    - Quinlan's FOIL: operates on variable bindings (instantiations)
+        #    - t should be number of positive bindings that satisfy the added literal
+        #    - p₀,n₀,p₁,n₁ should count bindings, not examples
+        #    - Solutions:
+        #      a) Enumerate all variable bindings for partial clause
+        #      b) Count bindings that satisfy new literal: t = |{θ: L(θ) ∧ θ ∈ pos_bindings}|
+        #      c) Use binding-based counts for information calculation
+        #    - CODE REVIEW SUGGESTION - Replace example-based with binding-based calculation:
+        #      ```python
+        #      from dataclasses import dataclass
+        #      from itertools import product
+        #      
+        #      @dataclass 
+        #      class VariableBinding:
+        #          substitution: Dict[str, str]  # {variable: constant}
+        #          is_positive: bool
+        #          satisfies_clause: bool = False
+        #      
+        #      def calculate_foil_gain_proper(self, literal: LogicalAtom, partial_rule: LogicalClause,
+        #                                    examples: List[Example]) -> float:
+        #          """Proper FOIL gain using variable bindings, not examples"""
+        #          # Generate bindings for partial rule
+        #          bindings_before = self.generate_variable_bindings(partial_rule, examples)
+        #          
+        #          # Generate bindings after adding literal  
+        #          extended_rule = LogicalClause(head=partial_rule.head, body=partial_rule.body + [literal])
+        #          bindings_after = self.generate_variable_bindings(extended_rule, examples)
+        #          
+        #          # Count positive/negative bindings (not examples!)
+        #          p0 = len([b for b in bindings_before if b.is_positive])
+        #          n0 = len([b for b in bindings_before if not b.is_positive])
+        #          p1 = len([b for b in bindings_after if b.is_positive]) 
+        #          n1 = len([b for b in bindings_after if not b.is_positive])
+        #          t = p1  # positive bindings that extend the rule
+        #          
+        #          if p0 == 0 or p1 == 0 or (p0 + n0) == 0 or (p1 + n1) == 0:
+        #              return 0.0
+        #          
+        #          # Quinlan's exact formula with Laplace correction
+        #          old_info = np.log2((p0 + 1) / (p0 + n0 + 2))
+        #          new_info = np.log2((p1 + 1) / (p1 + n1 + 2)) 
+        #          return t * (new_info - old_info)
+        #      
+        #      def generate_variable_bindings(self, clause: LogicalClause, examples: List[Example]) -> List[VariableBinding]:
+        #          """Generate all variable instantiations that satisfy clause"""
+        #          bindings = []
+        #          variables = self.extract_variables(clause)
+        #          constants = list(self.constants)
+        #          
+        #          # Generate all substitutions θ = {X₁/a₁, X₂/a₂, ...}
+        #          for values in product(constants, repeat=len(variables)):
+        #              substitution = dict(zip(variables, values))
+        #              
+        #              # Check if substitution satisfies clause body via SLD resolution
+        #              if self.satisfies_clause_sld(clause, substitution):
+        #                  # Check if corresponds to positive example
+        #                  is_pos = self.matches_positive_example(clause.head, substitution, examples)
+        #                  bindings.append(VariableBinding(substitution, is_pos, True))
+        #          
+        #          return bindings
+        #      ```
+        #
+        # 2. MISSING PROPER LOGARITHMIC BASE AND SMOOTHING
+        #    - Quinlan uses natural logarithm (ln) in some formulations
+        #    - Current smoothing (1e-8) is ad-hoc, should use Laplace correction
+        #    - Should handle cases where p₁=0 or n₁=0 more systematically
+        #    - Solutions:
+        #      a) Use consistent logarithmic base as in original FOIL
+        #      b) Apply Laplace correction: (count + 1) / (total + 2)
+        #      c) Handle degenerate cases with principled approach
         
         Uses FOIL's information gain formula:
         Gain = t * (log2(p1/(p1+n1)) - log2(p0/(p0+n0)))

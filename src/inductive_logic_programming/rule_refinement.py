@@ -14,7 +14,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 import logging
 
-from .inductive_logic_programming import (
+from .ilp_core import (
     LogicalTerm, LogicalAtom, LogicalClause, Example,
     InductiveLogicProgrammer
 )

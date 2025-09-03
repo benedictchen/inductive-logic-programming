@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 import logging
 from itertools import product, combinations
 
-from .inductive_logic_programming import (
+from .ilp_core import (
     LogicalTerm, LogicalAtom, LogicalClause, Example,
     InductiveLogicProgrammer
 )

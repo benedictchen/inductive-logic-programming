@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "inductive-logic-programming"
-version = "1.1.0"
+version = "1.2.0"
 description = "FOIL and Progol algorithms for learning logical rules from examples"
 readme = "README.md"
 license = {text = "Custom Non-Commercial License with Donation Requirements"}
@@ -29,10 +29,12 @@ test = [
 
 [project.urls]
 Funding = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS"
+Sponsor = "https://github.com/sponsors/benedictchen"
 
 [tool.hatch.build.targets.wheel]
-py-modules = ["inductive_logic_programming", "foil", "progol", "rule_refinement"]
+packages = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--cov=inductive_logic_programming", "--cov-report=term-missing"]
+pythonpath = ["src"]
+addopts = ["--cov=src/inductive_logic_programming", "--cov-report=term-missing"]
