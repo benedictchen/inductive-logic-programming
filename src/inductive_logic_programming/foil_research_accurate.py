@@ -1,14 +1,44 @@
 """
-FOIL Research-Accurate Implementation
-====================================
+🎯 FOIL RESEARCH-ACCURATE - Alternative Implementation Module
+============================================================
 
-Author: Benedict Chen (benedict@benedictchen.com)
+Research-validated FOIL implementation with mathematically correct algorithms.
 
-This module implements ALL FIXME solutions for FOIL with research accuracy.
-Based on: Quinlan (1990) "Learning logical definitions from relations"
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
 
-CRITICAL: This replaces the fake implementations with mathematically correct,
-research-validated algorithms that match the original 1990 paper.
+📚 Research Foundation:
+- Quinlan, J.R. (1990). "Learning logical definitions from relations." 
+  Machine Learning, 5(3), 239-266.
+- Provides mathematically correct implementations matching the original paper
+
+🎯 ELI5 Explanation:
+This is like having a "reference implementation" of FOIL - a version that
+follows the original 1990 research paper exactly, with no shortcuts or approximations.
+
+Think of it as the "textbook solution" that researchers can use to verify
+their results match Quinlan's original algorithm specifications.
+
+🔧 Key Features:
+• Exact Quinlan (1990) formula implementation
+• Research-validated variable binding generation
+• Proper SLD resolution for coverage testing
+• Mathematical correctness over performance optimization
+
+⚙️ Use Cases:
+• Research validation and benchmarking
+• Reference implementation for comparison
+• Teaching exact algorithm specifications
+• Academic paper reproduction
+
+🙏 Support This Work:
+If this research-accurate FOIL helped validate your academic work, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support enables continued development of research-grade ILP implementations!
 """
 
 import numpy as np
@@ -23,7 +53,7 @@ import time
 from .foil_comprehensive_config import (
     FOILComprehensiveConfig, 
     InformationGainMethod,
-    BindingGenerationMethod,
+    VariableBindingStrategy,
     CoverageTestingMethod,
     create_research_accurate_config
 )
@@ -240,11 +270,11 @@ class ResearchAccurateFOILLearner:
         """
         self.learning_statistics['bindings_generated'] += 1
         
-        if self.config.binding_generation_method == BindingGenerationMethod.EXHAUSTIVE_ENUMERATION:
+        if self.config.binding_strategy == VariableBindingStrategy.EXHAUSTIVE_ENUMERATION:
             return self._exhaustive_binding_enumeration(clause, examples)
-        elif self.config.binding_generation_method == BindingGenerationMethod.CONSTRAINT_GUIDED:
+        elif self.config.binding_strategy == VariableBindingStrategy.CONSTRAINT_GUIDED:
             return self._constraint_guided_binding_generation(clause, examples)
-        elif self.config.binding_generation_method == BindingGenerationMethod.SAMPLING_BASED:
+        elif self.config.binding_strategy == VariableBindingStrategy.HEURISTIC_PRUNING:
             return self._sampling_based_binding_generation(clause, examples)
         else:  # HYBRID
             return self._hybrid_binding_generation(clause, examples)

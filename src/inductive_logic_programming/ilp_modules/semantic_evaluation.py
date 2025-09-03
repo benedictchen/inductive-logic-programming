@@ -799,7 +799,7 @@ class SemanticEvaluationMixin(ABC):
     
     def _specialize_clause(self, clause: LogicalClause, negative_examples: List[Example]) -> List[LogicalClause]:
         """
-        ✅ COMPLETE IMPLEMENTATION - Clause Specialization with Multiple Algorithms
+        Clause Specialization with Multiple Algorithms
         
         Uses CompleteILPImplementation to provide research-backed specialization:
         - FOIL_ORIGINAL: Quinlan (1990) information gain specialization
@@ -836,7 +836,7 @@ class SemanticEvaluationMixin(ABC):
     
     def _generalize_clause(self, clause: LogicalClause, positive_examples: List[Example]) -> List[LogicalClause]:
         """
-        ✅ COMPLETE IMPLEMENTATION - Clause Generalization with Multiple Approaches
+        Clause Generalization with Multiple Approaches
         
         Uses CompleteILPImplementation to provide research-backed generalization:
         - REMOVE_LITERALS: Muggleton (1994) literal removal
@@ -870,7 +870,7 @@ class SemanticEvaluationMixin(ABC):
     
     def _unify_atoms(self, atom1: LogicalAtom, atom2: LogicalAtom, substitution: Dict[str, LogicalTerm]) -> bool:
         """
-        ✅ COMPLETE IMPLEMENTATION - Robinson's Unification with Multiple Variants
+        Robinson's Unification with Multiple Variants
         
         Uses CompleteILPImplementation to provide research-backed unification:
         - ROBINSON_BASIC: Robinson (1965) basic unification algorithm

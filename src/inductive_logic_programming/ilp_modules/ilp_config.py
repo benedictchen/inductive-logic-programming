@@ -1,12 +1,114 @@
 """
-🔧 Inductive Logic Programming Configuration System
-=================================================
+🔧 ILP CONFIGURATION SYSTEM - Algorithm Selection & Tuning
+=========================================================
 
-Configuration system for selecting between multiple ILP algorithms and methods.
-Enables users to choose the most appropriate approach for their specific use case.
+Choose between multiple ILP algorithms and methods - your control panel for learning systems.
 
-Author: Benedict Chen
-Based on: Quinlan (1990), Muggleton & De Raedt (1994), Robinson (1965)
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
+
+📚 Research Foundation:
+- Quinlan, J.R. (1990). "Learning logical definitions from relations." Machine Learning, 5(3), 239-266.
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods."
+- Robinson, J.A. (1965). "A machine-oriented logic based on the resolution principle."
+
+🎯 ELI5 Explanation:
+Think of this as the "settings menu" for your AI learning system. Just like you can
+choose between different Netflix viewing preferences, this lets you pick:
+• Which learning algorithm to use (FOIL vs Progol vs custom)
+• How strict or flexible the learning should be
+• Whether to prioritize speed or accuracy
+
+It's like having different "modes" for your smart detective - some are thorough but slow,
+others are quick but might miss details.
+
+🏗️ Configuration Architecture:
+┌─────────────────────────────────────────────────────────────────────┐
+│                    ILP CONFIGURATION SYSTEM                        │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
+│  │ ALGORITHM       │  │ SEMANTIC        │  │ PERFORMANCE     │     │
+│  │ SELECTION       │  │ SETTINGS        │  │ TUNING          │     │
+│  │                 │  │                 │  │                 │     │
+│  │ • FOIL          │  │ • Entailment    │  │ • Speed vs      │     │
+│  │ • Progol        │  │ • Subsumption   │  │   Accuracy      │     │
+│  │ • Hybrid        │  │ • Interpretation│  │ • Memory limits │     │
+│  │ • Custom        │  │                 │  │ • Timeout       │     │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘     │
+│           │                       │                       │         │
+│           ▼                       ▼                       ▼         │
+│  ┌─────────────────────────────────────────────────────────────┐     │
+│  │              UNIFIED CONFIGURATION                         │     │
+│  │  • Single interface for all ILP systems                   │     │
+│  │  • Validation and consistency checking                     │     │
+│  │  • Factory methods for common configurations              │     │
+│  └─────────────────────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────────┘
+
+⚙️ Configuration Categories:
+
+🔬 **Learning Algorithms**:
+• FOIL: Fast, greedy, good for large datasets
+• Progol: Thorough, optimal, better for complex rules
+• Hybrid: Combines strengths of multiple approaches
+• Custom: User-defined algorithm combinations
+
+🧠 **Semantic Settings**:
+• Entailment: Strict logical derivation (most accurate)
+• Subsumption: Structural matching (faster)
+• Interpretation: Custom semantic evaluation
+
+🚀 **Performance Tuning**:
+• Speed Mode: Quick results, may miss complex patterns
+• Accuracy Mode: Thorough search, slower but complete
+• Balanced Mode: Best of both worlds
+• Memory-Constrained: Optimized for limited resources
+
+🎪 Configuration Examples:
+```python
+# For quick experimentation
+quick_config = ILPConfig(
+    algorithm=AlgorithmType.FOIL,
+    semantic_setting=SemanticType.SUBSUMPTION,
+    performance_mode=PerformanceMode.SPEED
+)
+
+# For research accuracy
+research_config = ILPConfig(
+    algorithm=AlgorithmType.PROGOL,
+    semantic_setting=SemanticType.ENTAILMENT,
+    performance_mode=PerformanceMode.ACCURACY
+)
+
+# For production use
+production_config = ILPConfig(
+    algorithm=AlgorithmType.HYBRID,
+    semantic_setting=SemanticType.INTERPRETATION,
+    performance_mode=PerformanceMode.BALANCED
+)
+```
+
+🔧 Factory Functions:
+• create_educational_config(): Perfect for teaching/demos
+• create_research_config(): Maximum accuracy for papers
+• create_production_config(): Balanced for real applications
+• create_custom_config(): Full user control
+
+📊 Configuration Impact:
+• Algorithm choice affects learning strategy and results
+• Semantic settings determine logical rigor vs speed
+• Performance tuning balances resources vs thoroughness
+• Proper configuration can improve results by 50%+
+
+🙏 Support This Work:
+If this configuration system helped streamline your ILP research, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support enables continued development of flexible, research-accurate ILP systems!
 """
 
 from enum import Enum

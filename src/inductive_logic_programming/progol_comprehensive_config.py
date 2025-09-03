@@ -1,13 +1,118 @@
 """
-Progol Comprehensive Configuration System
-========================================
+🔬 PROGOL COMPREHENSIVE CONFIG - Advanced Inverse Entailment Control
+===================================================================
 
-Author: Benedict Chen (benedict@benedictchen.com)
+Configure every aspect of Progol's inverse entailment - complete research-accurate control.
 
-Configuration system for ALL Progol FIXME solutions, allowing users to choose
-between different research-accurate approaches for inverse entailment.
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
 
-Based on: Muggleton (1995) "Inverse entailment and Progol"
+📚 Research Foundation:
+- Muggleton, S. (1995). "Inverse entailment and Progol." 
+  New Generation Computing, 13(3&4), 245-286.
+- Establishes inverse entailment as the fundamental ILP operation
+- Provides theoretical framework for hypothesis construction
+
+🎯 ELI5 Explanation:
+Think of Progol's configuration like adjusting a high-end camera. You can choose:
+• How it focuses (which inverse entailment method)
+• How much it zooms in (bottom clause construction depth)
+• How it searches for the perfect shot (A* vs beam search)
+• Whether to use auto-mode or manual settings
+
+Each setting affects the quality and speed of learning, just like camera settings
+affect photo quality and shooting speed.
+
+🏗️ Progol Configuration Architecture:
+┌─────────────────────────────────────────────────────────────────────┐
+│                  PROGOL CONFIGURATION SYSTEM                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
+│  │ INVERSE         │  │ BOTTOM CLAUSE   │  │ SEARCH          │     │
+│  │ ENTAILMENT      │  │ CONSTRUCTION    │  │ STRATEGY        │     │
+│  │                 │  │                 │  │                 │     │
+│  │ • Muggleton     │  │ • Mode-directed │  │ • A* search     │     │
+│  │ • Mode-guided   │  │ • Depth-limited │  │ • Beam search   │     │
+│  │ • Constraint    │  │ • Variable      │  │ • Best-first    │     │
+│  │ • Hybrid        │  │   constraint    │  │ • Breadth-first │     │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘     │
+│           │                       │                       │         │
+│           ▼                       ▼                       ▼         │
+│  ┌─────────────────────────────────────────────────────────────┐     │
+│  │              COMPRESSION EVALUATION                        │     │
+│  │  • Standard: p - n - |H|                                  │     │
+│  │  • Weighted: α×p - β×n - γ×|H|                           │     │
+│  │  • Minimum Description Length (MDL)                       │     │
+│  │  • Statistical significance testing                       │     │
+│  └─────────────────────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────────┘
+
+⚙️ Configuration Categories:
+
+🧩 **Inverse Entailment Methods**:
+• Muggleton Original: Exact 1995 formulation for maximum accuracy
+• Mode-Guided: Uses mode declarations to constrain search space
+• Constraint-Based: Incorporates domain constraints during construction
+• Hybrid: Combines multiple approaches for robustness
+
+🏗️ **Bottom Clause Construction**:
+• Mode-Directed: Uses mode declarations (+input, -output, #constant)
+• Depth-Limited: Controls maximum literal depth in bottom clause
+• Variable-Constrained: Limits variable introduction patterns
+• Type-Aware: Respects domain type hierarchies
+
+🔍 **Search Strategies**:
+• A* Search: Optimal with admissible compression heuristic
+• Beam Search: Fixed-width search for efficiency
+• Best-First: Greedy search prioritizing highest compression
+• Breadth-First: Systematic exploration of hypothesis lattice
+
+📊 **Compression Measures**:
+• Standard: compression(H) = p - n - |H|
+• Weighted: Adjustable penalties for false positives/negatives
+• MDL: Minimum description length principle
+• Statistical: Chi-square and Fisher exact tests
+
+🎪 Progol Configuration Examples:
+```python
+# Maximum research accuracy
+research_config = ProgolConfig(
+    inverse_entailment_method=InverseEntailmentMethod.MUGGLETON_ORIGINAL,
+    bottom_construction=BottomConstructionMethod.MODE_DIRECTED,
+    search_strategy=SearchStrategy.A_STAR,
+    compression_measure=CompressionMeasure.STATISTICAL
+)
+
+# Efficient for large datasets
+production_config = ProgolConfig(
+    inverse_entailment_method=InverseEntailmentMethod.MODE_GUIDED,
+    bottom_construction=BottomConstructionMethod.DEPTH_LIMITED,
+    search_strategy=SearchStrategy.BEAM_SEARCH,
+    compression_measure=CompressionMeasure.STANDARD
+)
+```
+
+🔧 Factory Methods:
+• create_muggleton_1995_config(): Exact paper reproduction
+• create_educational_config(): Simplified for teaching
+• create_production_config(): Balanced for real applications
+• create_research_config(): Maximum theoretical rigor
+
+📈 Performance vs Accuracy Trade-offs:
+• Muggleton Original + A*: Highest accuracy, slowest
+• Mode-Guided + Beam: Good balance, moderate speed
+• Constraint-Based + Best-First: Fast, good for constrained domains
+• Hybrid approaches: Adaptive to problem characteristics
+
+🙏 Support This Work:
+If this Progol configuration system advanced your research, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support enables continued development of theoretically-grounded ILP systems!
 """
 
 from dataclasses import dataclass

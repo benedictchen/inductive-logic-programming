@@ -1,10 +1,33 @@
 """
-Core Predicate System Implementation
-====================================
+🔍 PREDICATE CORE - Essential Logical Vocabulary Operations
+==========================================================
 
-Author: Benedict Chen (benedict@benedictchen.com)
+Core predicate system functionality for managing logical vocabularies in ILP.
 
-Core predicate system functionality extracted from predicate_system.py.
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
+
+📚 Research Foundation:
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods."
+- Framework for predicate management and vocabulary organization
+
+🎯 ELI5 Explanation:
+This is the core engine that manages logical vocabulary - like a smart dictionary
+that knows not just what words mean, but how they're used in logical rules.
+
+If you're learning about families, it knows that "parent(X,Y)" takes two arguments
+and "human(X)" takes one, and keeps track of these patterns for the learning system.
+
+🔧 Key Features:
+• Predicate definition storage and retrieval
+• Type checking and validation
+• Vocabulary consistency management
+• Integration with ILP learning algorithms
+
+🙏 Support This Work:
+If this predicate system helped your ILP research, please consider supporting continued development!
 """
 
 from typing import Dict, List, Set, Optional, Tuple, Any

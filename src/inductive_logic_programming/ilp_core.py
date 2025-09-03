@@ -1,23 +1,174 @@
 """
-🧠 INDUCTIVE LOGIC PROGRAMMING CORE - Modular ILP System Integration
-==================================================================
+🧠 ILP CORE - Foundation Classes & System Integration
+===================================================
 
-This module provides the main InductiveLogicProgrammer class that integrates all
-ILP components in a clean, modular architecture. It combines the extracted modules
-while maintaining full backward compatibility with the original implementation.
+The backbone of inductive logic programming - data structures, algorithms, and system integration.
 
-Based on: Muggleton & De Raedt (1994) "Inductive Logic Programming: Theory and Methods"
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
 
-🎯 ELI5 Summary:
-Think of this as assembling a super-smart detective team! Each team member (module) 
-has special skills - one handles evidence (logical structures), another generates 
-theories (hypothesis generation), another checks if theories fit (unification), etc. 
-The core brings them all together to solve mysteries (learn logical rules)!
+📚 Research Foundation:
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods." 
+  Journal of Logic Programming, 19/20, 629-679.
+- Lloyd, J.W. (1987). "Foundations of Logic Programming." Springer-Verlag.
+- Established the theoretical framework for learning first-order logic from examples
 
-🏗️ Modular Architecture:
-=========================
+🎯 ELI5 Explanation:
+ILP Core is like the foundation of a smart detective academy. It provides:
+• 📝 The language detectives use to write clues (logical structures)  
+• 🧩 The rules for combining clues into theories (unification & inference)
+• 🏫 The academy system that trains detectives (learning algorithms)
+• 📊 The methods to test if theories actually work (evaluation)
 
-The ILP system is composed of specialized mixins:
+Think of teaching AI to understand family relationships - the core provides
+the vocabulary ("parent", "child") and grammar rules to learn that 
+"X is a grandparent of Z if X is a parent of Y and Y is a parent of Z."
+
+🏗️ ILP Core Architecture:
+┌─────────────────────────────────────────────────────────────────────┐
+│                       INDUCTIVE LOGIC PROGRAMMER                   │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
+│  │ LOGICAL         │  │ LEARNING        │  │ EVALUATION      │     │
+│  │ STRUCTURES      │  │ ALGORITHMS      │  │ SYSTEMS         │     │
+│  │                 │  │                 │  │                 │     │
+│  │ • LogicalTerm   │  │ • FOIL          │  │ • Coverage      │     │
+│  │ • LogicalAtom   │  │ • Progol        │  │ • Accuracy      │     │
+│  │ • LogicalClause │  │ • Custom        │  │ • Statistical   │     │
+│  │ • Example       │  │                 │  │   Testing       │     │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘     │
+│           │                       │                       │         │
+│  ┌─────────▼───────────────────────▼───────────────────────▼───────┐ │
+│  │                    UNIFICATION ENGINE                           │ │
+│  │  • Variable substitution  • Atom matching  • Clause resolution │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                │
+│  ┌─────────────────────────────────▼─────────────────────────────┐   │
+│  │                 HYPOTHESIS GENERATION                        │   │
+│  │  • Literal creation  • Clause construction  • Search space  │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────┘
+
+📊 Core Data Structures:
+
+🔤 LogicalTerm - Building Blocks of Logic:
+┌─────────────────────────────────────────────────────────────┐
+│                    LOGICAL TERM                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  CONSTANTS          VARIABLES          FUNCTIONS            │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐      │
+│  │ "john"      │    │ X           │    │ f(a,b)      │      │
+│  │ "mary"      │    │ Y           │    │ plus(2,3)   │      │
+│  │ 42          │    │ Z           │    │ list([1,2]) │      │
+│  │ true        │    │ _Anonymous  │    │ date(2024)  │      │
+│  └─────────────┘    └─────────────┘    └─────────────┘      │
+│                                                             │
+│  Properties:                                                │
+│  • name: str (identifier)                                  │
+│  • term_type: str ('constant', 'variable', 'function')     │
+│  • args: List[LogicalTerm] (for functions)                 │
+└─────────────────────────────────────────────────────────────┘
+
+⚛️ LogicalAtom - Statements About the World:
+┌─────────────────────────────────────────────────────────────┐
+│                    LOGICAL ATOM                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Structure: predicate(term₁, term₂, ..., termₙ)           │
+│                                                             │
+│  Examples:                                                  │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │ parent(john, mary)     - john is parent of mary    │   │
+│  │ older(X, Y)           - X is older than Y          │   │
+│  │ ¬criminal(person)     - person is not criminal     │   │
+│  │ likes(mary, chocolate) - mary likes chocolate      │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  Properties:                                                │
+│  • predicate: str (relationship name)                      │
+│  • terms: List[LogicalTerm] (arguments)                    │
+│  • negated: bool (positive vs negative atom)               │
+└─────────────────────────────────────────────────────────────┘
+
+🧩 LogicalClause - Complete Rules:
+┌─────────────────────────────────────────────────────────────┐
+│                   LOGICAL CLAUSE                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Structure: head :- body₁, body₂, ..., bodyₙ              │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              HORN CLAUSE EXAMPLE                    │   │
+│  │                                                     │   │
+│  │  grandparent(X,Z) :- parent(X,Y), parent(Y,Z)      │   │
+│  │  ┌─────────────┐     ┌──────────────────────────┐   │   │
+│  │  │    HEAD     │     │         BODY             │   │   │
+│  │  │ (consequent)│     │    (conditions)          │   │   │
+│  │  └─────────────┘     └──────────────────────────────┘   │   │
+│  │                                                     │   │
+│  │  Meaning: "X is grandparent of Z if X is parent    │   │
+│  │           of some Y and Y is parent of Z"          │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  Properties:                                                │
+│  • head: LogicalAtom (conclusion)                          │
+│  • body: List[LogicalAtom] (conditions)                    │
+│  • variables: Set[str] (all variables in clause)           │
+└─────────────────────────────────────────────────────────────┘
+
+📝 Example - Training Data:
+┌─────────────────────────────────────────────────────────────┐
+│                      EXAMPLE                               │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Training Instance = Atom + Label                          │
+│                                                             │
+│  Positive Examples (✅):          Negative Examples (❌):   │
+│  ┌─────────────────────────┐     ┌─────────────────────┐    │
+│  │ parent(tom, bob)        │     │ parent(bob, tom)    │    │
+│  │ parent(mary, alice)     │     │ parent(child, dad)  │    │
+│  │ parent(john, susan)     │     │ parent(cat, dog)    │    │
+│  └─────────────────────────┘     └─────────────────────┘    │
+│                                                             │
+│  Properties:                                                │
+│  • atom: LogicalAtom (the statement)                       │
+│  • is_positive: bool (true=positive, false=negative)       │
+│  • confidence: float (certainty, if known)                 │
+└─────────────────────────────────────────────────────────────┘
+
+🔄 Unification Process - Pattern Matching:
+┌─────────────────────────────────────────────────────────────┐
+│                    UNIFICATION ENGINE                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Goal: Make two logical expressions identical by finding    │
+│        appropriate variable substitutions                   │
+│                                                             │
+│  Example Unification:                                       │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │ Expression 1: parent(X, bob)                        │   │
+│  │ Expression 2: parent(tom, Y)                        │   │
+│  │                                                     │   │
+│  │ Unification: {X = tom, Y = bob}                     │   │
+│  │                                                     │   │
+│  │ Result: parent(tom, bob) = parent(tom, bob) ✅      │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  Unification Algorithm Steps:                               │
+│  1. Compare predicates (must match)                         │
+│  2. Compare arguments pairwise                              │  
+│  3. Build substitution mapping                              │
+│  4. Check consistency (no conflicts)                        │
+│  5. Apply substitution to verify match                      │
+└─────────────────────────────────────────────────────────────┘
+
+🏭 Factory Functions - Easy System Creation:
+
+The module provides factory functions for different use cases:
 
 1. **LogicalStructures**: Core data structures (terms, atoms, clauses, examples)
 2. **HypothesisGeneration**: Pattern extraction and candidate rule generation  
@@ -65,6 +216,13 @@ Factory Functions:
     education_ilp = create_educational_ilp()      # For teaching/demos
     research_ilp = create_research_ilp_system()   # For advanced research
     production_ilp = create_production_ilp()      # For real applications
+
+🙏 Support This Work:
+If this ILP Core implementation helped your research or project, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support makes continued development of research-accurate ILP algorithms possible!
 
 Author: Benedict Chen
 """

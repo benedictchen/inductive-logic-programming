@@ -1,10 +1,118 @@
 """
-Rule Refinement for Inductive Logic Programming
-Based on: Various ILP refinement operators and techniques from
-         Muggleton & De Raedt (1994), Lavrac & Dzeroski (1994)
+🔄 RULE REFINEMENT - Systematic Hypothesis Space Search
+======================================================
 
-Implements refinement operators for systematic search through the
-hypothesis space of logical clauses.
+Transform logical rules through specialization and generalization - the engine of ILP learning.
+
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
+
+📚 Research Foundation:
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods." 
+  Journal of Logic Programming, 19/20, 629-679.
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications."
+- Established theoretical framework for refinement operators in ILP
+
+🎯 ELI5 Explanation:
+Rule refinement is like editing Wikipedia articles to make them more accurate.
+You start with a rough draft rule like "All birds fly" and then:
+• SPECIALIZE: Add details → "Birds with wings fly" (more specific, fewer cases)
+• GENERALIZE: Remove details → "Animals fly" (more general, more cases)
+
+The goal is finding the "Goldilocks rule" - not too specific (misses cases), 
+not too general (includes wrong cases), but just right for the data.
+
+🏗️ Refinement Operator Architecture:
+┌─────────────────────────────────────────────────────────────────────┐
+│                    RULE REFINEMENT SYSTEM                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────┐               ┌─────────────────┐               │
+│  │ SPECIALIZATION  │               │ GENERALIZATION  │               │
+│  │ OPERATORS       │               │ OPERATORS       │               │
+│  │                 │               │                 │               │
+│  │ • Add literals  │ ◄────────────► │ • Remove literals │             │
+│  │ • Add constraints│               │ • Relax constraints│             │
+│  │ • Refine terms  │               │ • Abstract terms │               │
+│  │ • Type restrict │               │ • Type generalize│               │
+│  └─────────────────┘               └─────────────────┘               │
+│          │                                   │                       │
+│          ▼                                   ▼                       │
+│  ┌─────────────────────────────────────────────────────────────┐     │
+│  │              REFINEMENT SEARCH SPACE                       │     │
+│  │                                                             │     │
+│  │    More General                                             │     │
+│  │         ▲                                                   │     │
+│  │    fly(X).                                                  │     │
+│  │         │                                                   │     │
+│  │    fly(X) :- animal(X).                                     │     │
+│  │         │                                                   │     │
+│  │    fly(X) :- bird(X).                ◄─── TARGET CONCEPT    │     │
+│  │         │                                                   │     │
+│  │    fly(X) :- bird(X), wings(X).                            │     │
+│  │         │                                                   │     │
+│  │    fly(X) :- bird(X), wings(X), small(X).                  │     │
+│  │         ▼                                                   │     │
+│  │    More Specific                                            │     │
+│  └─────────────────────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────────┘
+
+⚙️ Core Refinement Operations:
+
+🔽 **Specialization Operators** (Top-Down):
+• Literal Addition: Add conditions to rule body
+• Variable Binding: Replace variables with constants
+• Type Constraint: Add type restrictions to variables
+• Negation Introduction: Add negative literals
+
+🔼 **Generalization Operators** (Bottom-Up):
+• Literal Removal: Remove conditions from rule body
+• Variable Introduction: Replace constants with variables
+• Type Relaxation: Remove type restrictions
+• Negation Elimination: Remove negative literals
+
+🎪 Rule Refinement in Action:
+```
+Initial Rule: parent(X,Y) :- male(X), father(X,Y)
+
+SPECIALIZATION Examples:
+→ parent(X,Y) :- male(X), father(X,Y), older(X,Y)    [Add condition]
+→ parent(X,Y) :- male(X), father(john,Y)             [Bind variable]
+→ parent(X,Y) :- human(X), male(X), father(X,Y)      [Add type constraint]
+
+GENERALIZATION Examples:
+→ parent(X,Y) :- father(X,Y)                         [Remove condition]
+→ parent(X,Y) :- male(Z), father(Z,Y)                [Introduce variable]
+→ parent(X,Y).                                       [Remove all conditions]
+```
+
+🔧 Refinement Strategies:
+• **Minimal Change**: Apply single operator per step
+• **Systematic Exploration**: Breadth-first or depth-first search
+• **Heuristic Guidance**: Use accuracy/coverage to guide search
+• **Theta-Subsumption**: Maintain logical ordering of hypotheses
+
+📊 Complexity & Properties:
+• Search Space: Exponential in clause length and vocabulary size
+• Completeness: Refinement operators can reach any clause in hypothesis space
+• Soundness: All refined clauses maintain logical validity
+• Optimality: Depends on search strategy and evaluation function
+
+🚀 Advanced Refinement Features:
+• ✅ Mode-directed refinement using background knowledge
+• ✅ Type-aware operators respecting domain constraints
+• ✅ Inverse operators for bidirectional search
+• ✅ Stochastic refinement for large search spaces
+• ✅ Multi-objective optimization (accuracy vs complexity)
+
+🙏 Support This Work:
+If this rule refinement implementation helped your research or project, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support makes continued development of research-accurate ILP algorithms possible!
 """
 
 import numpy as np

@@ -72,7 +72,7 @@ def create_sample_data():
 def main():
     """Demonstrate coverage analysis capabilities"""
     
-    print("🧠 Coverage Analysis Module Demonstration")
+    print("Coverage Analysis Module Demonstration")
     print("=" * 50)
     
     # Create analyzer and sample data
@@ -80,7 +80,7 @@ def main():
     rule, pos_examples, neg_examples = create_sample_data()
     
     print(f"\n📝 Sample Rule: {rule}")
-    print(f"📊 Examples: {len(pos_examples)} positive, {len(neg_examples)} negative")
+    print(f"Examples: {len(pos_examples)} positive, {len(neg_examples)} negative")
     
     # Calculate comprehensive metrics
     print(f"\n🔍 Calculating coverage metrics...")
@@ -108,7 +108,7 @@ def main():
     print(f"   • 95% CI: ({metrics.confidence_interval[0]:.3f}, {metrics.confidence_interval[1]:.3f})")
     
     # Generate comprehensive report
-    print(f"\n📊 Generating comprehensive analysis report...")
+    print(f"\nGenerating comprehensive analysis report...")
     report = analyzer.generate_coverage_analysis_report(rule, pos_examples, neg_examples)
     
     # Print detailed report
@@ -138,7 +138,7 @@ def main():
     print(f"   • Best rule: {comparison['best_rule']['rule'] if comparison['best_rule'] else 'None'}")
     print(f"   • Average F1-score: {comparison['average_metrics']['f1_score']:.3f}")
     
-    print(f"\n✨ Key Features Demonstrated:")
+    print(f"\nKey Features Demonstrated:")
     print(f"   • Comprehensive coverage metrics calculation")
     print(f"   • Statistical significance testing") 
     print(f"   • Multiple coverage strategies")
@@ -146,7 +146,7 @@ def main():
     print(f"   • Rule comparison capabilities")
     print(f"   • Interpretability assessment")
     
-    print(f"\n🎯 Coverage Analysis Module Successfully Extracted!")
+    print(f"\nCoverage Analysis Module Successfully Extracted!")
     print(f"   Ready for integration into ILP systems for comprehensive rule evaluation.")
 
 

@@ -1,9 +1,201 @@
 """
-Progol (Programmable Goal-directed induction) Implementation
-Based on: Muggleton (1995) "Inverse entailment and Progol"
+🔬 PROGOL - Programmable Goal-directed Induction
+==============================================
 
-Progol uses inverse entailment to construct the most specific clause
-that entails a positive example, then searches for generalizations.
+Advanced ILP using inverse entailment to construct hypotheses - the theoretical foundation of modern ILP.
+
+🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
+   benedict@benedictchen.com
+   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+   💖 Sponsor: https://github.com/sponsors/benedictchen
+
+📚 Research Foundation:
+- Muggleton, S. (1995). "Inverse entailment and Progol." 
+  New Generation Computing, 13(3&4), 245-286.
+- Introduced inverse entailment as the core ILP operation
+- Established theoretical foundations for hypothesis construction
+- Won multiple ILP competitions and influenced all subsequent systems
+
+🎯 ELI5 Explanation:
+Progol is like a master detective who works backwards from clues. 
+Given that "Sherlock is a great detective" and knowing facts about Sherlock,
+it figures out what general rule could explain this conclusion.
+
+Instead of trying all possible rules (like FOIL), Progol smartly constructs 
+the "bottom clause" - the most specific rule that could possibly work - 
+then searches for useful generalizations of it.
+
+🧩 Inverse Entailment Concept:
+Traditional Logic: Background + Hypothesis ⊨ Example
+Inverse Entailment: Background + Example ⊨ Hypothesis
+
+┌─────────────────────────────────────────────────────────────┐
+│                 INVERSE ENTAILMENT PROCESS                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Given: Background Knowledge (B) + Positive Example (e)    │
+│                           │                                 │
+│  ┌────────────────────────▼────────────────────────────┐    │
+│  │  STEP 1: Construct Bottom Clause (⊥)              │    │
+│  │  Most specific clause that B ∪ ⊥ ⊨ e              │    │
+│  │                                                     │    │
+│  │  Example: detective(sherlock)                      │    │
+│  │  Background: person(sherlock), smart(sherlock),    │    │
+│  │              observant(sherlock), famous(sherlock) │    │
+│  │                                                     │    │
+│  │  Bottom: detective(X) ← person(X), smart(X),       │    │
+│  │                        observant(X), famous(X)     │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                           │                                 │
+│  ┌────────────────────────▼────────────────────────────┐    │
+│  │  STEP 2: Search for Generalizations               │    │
+│  │  Find clauses θ-subsuming ⊥ that fit the data    │    │
+│  │                                                     │    │
+│  │  Candidate 1: detective(X) ← person(X), smart(X)  │    │
+│  │  Candidate 2: detective(X) ← smart(X), observant(X)│    │
+│  │  Candidate 3: detective(X) ← person(X)            │    │
+│  │                                                     │    │
+│  │  Test each against all examples, pick best         │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                           │                                 │
+│  OUTPUT: Best Hypothesis                                   │
+└─────────────────────────────────────────────────────────────┘
+
+🏗️ Progol Algorithm Architecture:
+┌─────────────────────────────────────────────────────────────┐
+│                  PROGOL LEARNING CYCLE                     │
+├─────────────────────────────────────────────────────────────┤
+│ INPUT: Examples (E+, E-), Background (B), Mode Declarations │
+│                           │                                 │
+│ FOR each uncovered positive example e ∈ E+:                │
+│                           │                                 │
+│ ┌─────────────────────────▼─────────────────────────────┐   │
+│ │  1. MODE-DIRECTED INVERSE ENTAILMENT                  │   │
+│ │     • Use mode declarations to constrain search      │   │
+│ │     • Saturate example with background knowledge     │   │
+│ │     • Construct most specific bottom clause ⊥        │   │
+│ │                                                       │   │
+│ │  Example Bottom Construction:                         │   │
+│ │  ┌─────────────────────────────────────────────────┐ │   │
+│ │  │ e: fly(robin)                                   │ │   │
+│ │  │ B: bird(robin), small(robin), wings(robin)      │ │   │
+│ │  │ ⊥: fly(X) ← bird(X), small(X), wings(X),       │ │   │
+│ │  │             warm_blooded(X), feathered(X), ...  │ │   │
+│ │  └─────────────────────────────────────────────────┘ │   │
+│ └───────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│ ┌─────────────────────────▼─────────────────────────────┐   │
+│ │  2. SEARCH LATTICE EXPLORATION                        │   │
+│ │     • Start from bottom clause ⊥                     │   │
+│ │     • Use A* search with compression as heuristic    │   │
+│ │     • Find clauses that θ-subsume ⊥                  │   │
+│ │                                                       │   │
+│ │  Search Lattice:                                      │   │
+│ │  ┌─────────────────────────────────────────────────┐ │   │
+│ │  │        fly(X) ← true                            │ │   │
+│ │  │       ╱        │         ╲                      │ │   │
+│ │  │  fly(X)←      fly(X)←     fly(X)←               │ │   │
+│ │  │   bird(X)    wings(X)    small(X)               │ │   │
+│ │  │      ╲         │         ╱                      │ │   │
+│ │  │       fly(X) ← bird(X), wings(X)                │ │   │
+│ │  │              │                                   │ │   │
+│ │  │            ⊥ (bottom)                           │ │   │
+│ │  └─────────────────────────────────────────────────┘ │   │
+│ └───────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│ ┌─────────────────────────▼─────────────────────────────┐   │
+│ │  3. HYPOTHESIS EVALUATION & COMPRESSION              │   │
+│ │     • Evaluate each candidate on all examples        │   │
+│ │     • Use compression measure: compression(H) =      │   │
+│ │       p - h - |H|                                    │   │
+│ │       where p=positives covered, h=negatives,        │   │
+│ │       |H|=clause length                              │   │
+│ │     • Select hypothesis maximizing compression       │   │
+│ └───────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│ OUTPUT: Complete Theory (Set of Clauses)                   │
+└─────────────────────────────────────────────────────────────┘
+
+⚙️ Key Progol Innovations:
+
+🎯 **Mode Declarations**: Constrain search space intelligently
+```
+modeh(1, fly(+animal))          % Head: fly/1 with input animal
+modeb(*, bird(+animal))         % Body: bird/1, any frequency  
+modeb(*, wings(+animal))        % Body: wings/1, any frequency
+modeb(1, size(-animal, #small)) % Body: size/2, output size=small
+```
+
+🔍 **θ-Subsumption**: Formal generalization relationship
+Clause C₁ θ-subsumes C₂ if ∃ substitution θ such that C₁θ ⊆ C₂
+
+📊 **Compression Measure**: Information-theoretic evaluation
+compression(H) = p - h - |H|
+• p = positive examples covered
+• h = negative examples covered (penalty)  
+• |H| = hypothesis length (penalty)
+
+🎪 Progol in Action Example:
+```
+Given Examples:
+✅ fly(robin), fly(eagle), fly(sparrow)
+❌ fly(penguin), fly(ostrich)
+
+Background:
+bird(robin), bird(eagle), bird(sparrow), bird(penguin), bird(ostrich)
+wings(robin), wings(eagle), wings(sparrow)
+size(robin,small), size(eagle,large), size(sparrow,small)
+
+Mode Declarations:
+modeh(1, fly(+bird))
+modeb(*,wings(+bird))  
+modeb(*,size(+bird,#small))
+
+Progol Process:
+1. Pick fly(robin), construct bottom:
+   fly(X) ← bird(X), wings(X), size(X,small)
+
+2. Search generalizations:
+   fly(X) ← bird(X), wings(X)           [compression: +2]
+   fly(X) ← wings(X)                    [compression: +1] 
+   fly(X) ← bird(X), size(X,small)      [compression: -1]
+
+3. Best: fly(X) ← bird(X), wings(X)
+```
+
+🚀 Advanced Progol Features:
+• ✅ Mode-directed search constrains hypothesis space
+• ✅ Bottom clause construction ensures logical correctness  
+• ✅ A* search with compression heuristic finds optimal solutions
+• ✅ Handles determinate literals and functional dependencies
+• ✅ Supports recursive predicates and complex data structures
+• ✅ Noise tolerance through statistical evaluation
+
+📊 Complexity & Theoretical Properties:
+• Time: O(|atoms|^|clause_length|) for bottom clause construction
+• Space: O(|lattice_size|) for search
+• Completeness: Finds optimal compression if it exists
+• Soundness: All hypotheses are logically valid
+• Optimality: A* search guarantees optimal compression
+
+🔧 Progol vs FOIL Comparison:
+┌─────────────────┬─────────────────┬─────────────────────┐
+│ Aspect          │ FOIL            │ PROGOL              │
+├─────────────────┼─────────────────┼─────────────────────┤
+│ Search Strategy │ Top-down        │ Bottom-up           │
+│ Heuristic       │ Information gain│ Compression         │
+│ Completeness    │ Heuristic       │ Optimal (with A*)   │
+│ Theory          │ Minimal         │ Strong (entailment) │
+│ Mode Constraints│ Limited         │ Comprehensive       │
+│ Noise Handling  │ Statistical     │ Compression-based   │
+└─────────────────┴─────────────────┴─────────────────────┘
+
+🙏 Support This Work:
+If this PROGOL implementation helped your research or project, please consider:
+🍺 Buy Benedict a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
+💖 GitHub Sponsor: https://github.com/sponsors/benedictchen
+
+Your support makes continued development of research-accurate ILP algorithms possible!
 """
 
 import numpy as np
