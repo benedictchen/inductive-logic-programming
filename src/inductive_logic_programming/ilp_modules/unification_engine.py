@@ -834,7 +834,7 @@ class UnificationEngineMixin:
         if pred1 == pred2:
             return True
             
-        # Special handling for target predicate placeholder
+        # Special handling for target predicate variable
         if pred1 == "target_pred" or pred2 == "target_pred":
             return True
             

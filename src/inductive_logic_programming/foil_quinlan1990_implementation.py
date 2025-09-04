@@ -659,7 +659,12 @@ class FOILResearchAccurateSolutions:
         
         # Use configured coverage method to check if body is satisfied
         # For now, simplified check - could be enhanced based on coverage method
-        return True  # Simplified for this implementation
+        # Check if all body atoms are satisfied under the substitution
+        for body_atom in body:
+            instantiated_atom = self._apply_substitution(body_atom, substitution)
+            if not self._atom_satisfied_by_background(instantiated_atom):
+                return False
+        return True
     
     def _matches_positive_example(self, head: LogicalAtom, substitution: Dict[str, str],
                                 examples: List[Example]) -> bool:
@@ -728,29 +733,128 @@ class FOILResearchAccurateSolutions:
     
     def _generate_type_constraints(self, clause: LogicalClause) -> Dict[str, str]:
         """Generate type constraints for CLP"""
-        return {}  # Simplified implementation
+        constraints = {}
+        
+        # Infer types from predicate signatures
+        for atom in clause.body + [clause.head]:
+            predicate_sig = self._get_predicate_signature(atom.predicate)
+            for i, term in enumerate(atom.terms):
+                if term.term_type == 'variable' and i < len(predicate_sig):
+                    expected_type = predicate_sig[i]
+                    if term.name not in constraints:
+                        constraints[term.name] = expected_type
+                    elif constraints[term.name] != expected_type:
+                        # Type conflict - mark as polymorphic
+                        constraints[term.name] = 'any'
+        
+        return constraints
     
     def _solve_constraints_for_coverage(self, clause: LogicalClause, example: Example,
                                       constraints: Dict, background_knowledge: List) -> bool:
         """Solve constraints for CLP coverage"""
-        return True  # Simplified implementation
+        # Create constraint satisfaction problem
+        variables = self._extract_variables(clause)
+        
+        # Try to find a substitution that satisfies all constraints
+        for substitution in self._generate_substitutions(variables, example, background_knowledge):
+            if self._satisfies_all_constraints(substitution, constraints):
+                # Check if this substitution makes the clause cover the example
+                if self._clause_covers_example_with_substitution(clause, example, substitution):
+                    return True
+        
+        return False
     
     def _tabled_sld_resolution(self, clause: LogicalClause, goal: LogicalAtom,
                              background_kb: List, memo_table: Dict) -> bool:
         """Tabled SLD resolution with memoization"""
-        return True  # Simplified implementation
+        # Check memo table first
+        goal_key = self._goal_to_key(goal)
+        if goal_key in memo_table:
+            return memo_table[goal_key]
+        
+        # Try to resolve goal with clause
+        try:
+            substitution = self._unify(clause.head, goal)
+            if substitution is not None:
+                # Resolve all body goals with substitution applied
+                success = True
+                for body_goal in clause.body:
+                    instantiated_goal = self._apply_substitution(body_goal, substitution)
+                    if not self._resolve_with_background(instantiated_goal, background_kb):
+                        success = False
+                        break
+                
+                memo_table[goal_key] = success
+                return success
+        except Exception:
+            pass
+        
+        memo_table[goal_key] = False
+        return False
     
     def _infer_type_constraints(self, variables: List[str], examples: List[Example]) -> Dict[str, str]:
         """Infer type constraints from examples"""
-        return {}  # Simplified implementation
+        type_constraints = {}
+        
+        for variable in variables:
+            # Collect all constants bound to this variable across examples
+            bound_values = set()
+            for example in examples:
+                bindings = self._extract_variable_bindings(variable, example)
+                bound_values.update(bindings)
+            
+            # Infer type from bound values
+            if bound_values:
+                inferred_type = self._infer_type_from_values(bound_values)
+                type_constraints[variable] = inferred_type
+            else:
+                type_constraints[variable] = 'any'  # No constraints
+        
+        return type_constraints
     
     def _satisfies_type_constraint(self, constant: str, constraint_type: str) -> bool:
         """Check if constant satisfies type constraint"""
-        return True  # Simplified implementation
+        if constraint_type == 'any':
+            return True
+        
+        # Check specific type constraints
+        if constraint_type == 'integer':
+            try:
+                int(constant)
+                return True
+            except ValueError:
+                return False
+        elif constraint_type == 'float':
+            try:
+                float(constant)
+                return True
+            except ValueError:
+                return False
+        elif constraint_type == 'string':
+            return isinstance(constant, str)
+        elif constraint_type == 'atom':
+            return constant.islower() if isinstance(constant, str) else False
+        
+        # Default: assume constraint is satisfied if no specific rule
+        return True
     
     def _passes_all_constraints(self, substitution: Dict[str, str], clause: LogicalClause) -> bool:
         """Check if substitution passes all constraints"""
-        return True  # Simplified implementation
+        # Get type constraints for the clause
+        type_constraints = self._generate_type_constraints(clause)
+        
+        # Check each variable binding against its type constraint
+        for var, value in substitution.items():
+            if var in type_constraints:
+                constraint_type = type_constraints[var]
+                if not self._satisfies_type_constraint(value, constraint_type):
+                    return False
+        
+        # Additional structural constraints
+        if not self._satisfies_structural_constraints(substitution, clause):
+            return False
+        
+        return True
     
     def _score_constants(self, constants: Set[str], examples: List[Example]) -> Dict[str, float]:
         """Score constants based on frequency and heuristics"""
@@ -766,8 +870,30 @@ class FOILResearchAccurateSolutions:
     def _score_binding(self, substitution: Dict[str, str], clause: LogicalClause, 
                       examples: List[Example]) -> float:
         """Score a variable binding combination"""
-        # Simple scoring based on number of positive examples matched
-        return 1.0  # Simplified implementation
+        # Score based on number of positive examples matched
+        pos_matched = 0
+        neg_matched = 0
+        
+        for example in examples:
+            if self._clause_covers_example_with_substitution(clause, example, substitution):
+                if example.is_positive:
+                    pos_matched += 1
+                else:
+                    neg_matched += 1
+        
+        # Calculate precision-weighted score
+        total_matched = pos_matched + neg_matched
+        if total_matched == 0:
+            return 0.0
+        
+        precision = pos_matched / total_matched
+        coverage = pos_matched / len([ex for ex in examples if ex.is_positive])
+        
+        # Combine precision and coverage with harmonic mean (F1-like)
+        if precision + coverage == 0:
+            return 0.0
+        
+        return 2 * (precision * coverage) / (precision + coverage)
     
     def get_implementation_summary(self) -> Dict[str, Any]:
         """Get summary of current configuration and implementations"""

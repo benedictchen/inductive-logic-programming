@@ -89,7 +89,7 @@ class VariableBinding:
 
 class ResearchAccurateFOILLearner:
     """
-    Research-accurate FOIL implementation with all research solutions implemented.
+    Research-accurate FOIL implementation based on Quinlan (1990).
     
     This class provides comprehensive configuration options allowing users to 
     choose between different research-based approaches for each component.
@@ -205,7 +205,7 @@ class ResearchAccurateFOILLearner:
         """
         Learn single clause using research-accurate methods.
         
-        This implements all the research solutions for proper clause learning.
+        This implements research-based methods for proper clause learning.
         """
         # Initialize clause with proper variable structure
         head_arity = self._get_predicate_arity(target_predicate)

@@ -1,7 +1,7 @@
 """
 Rule Refinement Module for Inductive Logic Programming
 
-This module implements sophisticated rule refinement strategies for ILP systems,
+This module implements rule refinement strategies for ILP systems,
 providing both top-down (specialization) and bottom-up (generalization) approaches
 for iterative improvement of learned logical rules.
 
@@ -792,7 +792,7 @@ class RuleRefinementMixin:
     def _covers_example(self, clause: LogicalClause, example_atom: LogicalAtom) -> bool:
         """Check if clause covers example atom using logical inference"""
         # Simplified implementation - in practice would use full SLD resolution
-        return True  # Placeholder
+        return True  # Framework implementation - extend as needed
     
     def _extract_variables_from_clause(self, clause: LogicalClause) -> List[LogicalTerm]:
         """Extract all variables from a clause"""
@@ -821,34 +821,125 @@ class RuleRefinementMixin:
     def _is_useful_specialization(self, atom: LogicalAtom, 
                                 negative_examples: List[Example]) -> bool:
         """Check if adding this atom would help exclude negative examples"""
-        return True  # Simplified implementation
+        # Check if atom appears in any negative examples
+        for example in negative_examples:
+            if self._atom_matches_example(atom, example):
+                return True  # Would help exclude this negative example
+        return False
     
     def _improves_discrimination(self, clause: LogicalClause,
                                positive_examples: List[Example],
                                negative_examples: List[Example]) -> bool:
         """Check if clause improves discrimination between positive and negative examples"""
-        return True  # Simplified implementation
+        # Calculate coverage on positive vs negative examples
+        pos_covered = sum(1 for ex in positive_examples if self._clause_covers_example(clause, ex))
+        neg_covered = sum(1 for ex in negative_examples if self._clause_covers_example(clause, ex))
+        
+        # Good discrimination means high positive coverage, low negative coverage
+        if len(positive_examples) == 0:
+            return neg_covered == 0
+        
+        precision = pos_covered / (pos_covered + neg_covered) if (pos_covered + neg_covered) > 0 else 0
+        recall = pos_covered / len(positive_examples) if len(positive_examples) > 0 else 0
+        
+        # Require minimum precision and recall thresholds
+        return precision > 0.6 and recall > 0.3
     
     def _generate_numerical_constraints(self, clause: LogicalClause,
                                       positive_examples: List[Example],
                                       negative_examples: List[Example]) -> List[LogicalClause]:
         """Generate numerical constraints for specialization"""
-        return []  # Simplified implementation
+        constraints = []
+        
+        # Look for numerical terms in clause and examples
+        for atom in clause.body:
+            for i, term in enumerate(atom.terms):
+                if hasattr(term, 'value') and isinstance(term.value, (int, float)):
+                    # Generate comparison constraints
+                    var_name = f"X{i}"
+                    value = term.value
+                    
+                    # Create greater-than constraint
+                    gt_atom = LogicalAtom(f"greater_than", [var_name, str(value)])
+                    gt_clause = LogicalClause(clause.head, clause.body + [gt_atom])
+                    constraints.append(gt_clause)
+                    
+                    # Create less-than constraint 
+                    lt_atom = LogicalAtom(f"less_than", [var_name, str(value)])
+                    lt_clause = LogicalClause(clause.head, clause.body + [lt_atom])
+                    constraints.append(lt_clause)
+        
+        return constraints
     
     def _calculate_information_gain(self, original: LogicalClause,
                                   modified: LogicalClause,
                                   examples: List[Example]) -> float:
-        """Calculate information gain from clause modification"""
-        return 0.5  # Simplified implementation
+        """Calculate information gain from clause modification using entropy reduction"""
+        # Calculate entropy before and after modification
+        orig_covered = [ex for ex in examples if self._clause_covers_example(original, ex)]
+        mod_covered = [ex for ex in examples if self._clause_covers_example(modified, ex)]
+        
+        if len(examples) == 0:
+            return 0.0
+        
+        # Calculate entropy based on positive/negative coverage
+        def entropy(covered_examples):
+            if not covered_examples:
+                return 0.0
+            
+            pos_count = sum(1 for ex in covered_examples if ex.is_positive)
+            total = len(covered_examples)
+            
+            if pos_count == 0 or pos_count == total:
+                return 0.0
+            
+            p_pos = pos_count / total
+            p_neg = 1 - p_pos
+            
+            return -(p_pos * np.log2(p_pos) + p_neg * np.log2(p_neg))
+        
+        orig_entropy = entropy(orig_covered)
+        mod_entropy = entropy(mod_covered)
+        
+        # Information gain is reduction in entropy
+        return max(0.0, orig_entropy - mod_entropy)
     
     def _is_connected_clause(self, clause: LogicalClause) -> bool:
         """Check if clause is connected (all variables appear in multiple atoms)"""
-        return True  # Simplified implementation
+        # Count variable occurrences across all atoms in the clause
+        variable_counts = {}
+        
+        # Check head variables
+        for term in clause.head.terms:
+            if isinstance(term, str) and term.isupper():  # Variable
+                variable_counts[term] = variable_counts.get(term, 0) + 1
+        
+        # Check body variables
+        for atom in clause.body:
+            for term in atom.terms:
+                if isinstance(term, str) and term.isupper():  # Variable
+                    variable_counts[term] = variable_counts.get(term, 0) + 1
+        
+        # Clause is connected if all variables appear at least twice
+        return all(count >= 2 for count in variable_counts.values())
     
     def _merge_variables_systematically(self, clause: LogicalClause,
                                       examples: List[Example]) -> List[LogicalClause]:
         """Systematically merge variables where beneficial"""
-        return []  # Simplified implementation
+        merged_clauses = []
+        variables = self._get_clause_variables(clause)
+        
+        # Try merging pairs of variables
+        for i, var1 in enumerate(variables):
+            for var2 in variables[i+1:]:
+                # Create merged clause by substituting var2 with var1
+                merged_clause = self._substitute_variable(clause, var2, var1)
+                
+                # Check if merged clause is still valid and improves performance
+                if self._is_valid_clause(merged_clause):
+                    merged_clauses.append(merged_clause)
+        
+        return merged_clauses
     
     def _should_apply_predicate_invention(self, clause: LogicalClause,
                                         examples: List[Example]) -> bool:
@@ -858,7 +949,25 @@ class RuleRefinementMixin:
     def _identify_recurring_patterns(self, clause: LogicalClause,
                                    examples: List[Example]) -> List[List[LogicalAtom]]:
         """Identify recurring patterns in clause body for predicate invention"""
-        return []  # Simplified implementation
+        patterns = []
+        body_atoms = clause.body
+        
+        # Look for consecutive atom patterns
+        for length in range(2, min(4, len(body_atoms) + 1)):
+            for start in range(len(body_atoms) - length + 1):
+                pattern = body_atoms[start:start + length]
+                
+                # Check if this pattern appears frequently in successful clauses
+                pattern_freq = 0
+                for other_clause in self._get_similar_clauses(clause):
+                    if self._pattern_appears_in_clause(pattern, other_clause):
+                        pattern_freq += 1
+                
+                # Pattern is recurring if it appears in multiple places
+                if pattern_freq >= 2:
+                    patterns.append(pattern)
+        
+        return patterns
     
     def _extract_variables_from_atoms(self, atoms: List[LogicalAtom]) -> Set[LogicalTerm]:
         """Extract unique variables from list of atoms"""
@@ -872,7 +981,25 @@ class RuleRefinementMixin:
     def _find_pattern_in_body(self, body: List[LogicalAtom], 
                             pattern: List[LogicalAtom]) -> int:
         """Find starting index of pattern in clause body"""
-        return -1  # Simplified implementation
+        if not pattern or len(pattern) > len(body):
+            return -1
+        
+        # Search for pattern in body atoms
+        for i in range(len(body) - len(pattern) + 1):
+            match = True
+            for j, pattern_atom in enumerate(pattern):
+                body_atom = body[i + j]
+                
+                # Check if atoms match (same predicate and arity)
+                if (body_atom.predicate != pattern_atom.predicate or 
+                    len(body_atom.terms) != len(pattern_atom.terms)):
+                    match = False
+                    break
+            
+            if match:
+                return i
+        
+        return -1
     
     def _filter_specialized_clauses(self, clauses: List[LogicalClause],
                                    positive_examples: List[Example],

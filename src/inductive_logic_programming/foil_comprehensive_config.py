@@ -64,6 +64,7 @@ class FOILComprehensiveConfig:
     
     # Performance and debugging
     enable_detailed_logging: bool = False
+    log_level: str = "WARNING"
     validate_theoretical_properties: bool = True
     
     def validate_config(self) -> Tuple[bool, List[str]]:
@@ -89,7 +90,8 @@ def create_research_accurate_config() -> FOILComprehensiveConfig:
         use_exact_binding_counts=True,
         sld_max_resolution_steps=200,
         max_binding_combinations=50000,
-        enable_detailed_logging=True
+        enable_detailed_logging=True,
+        log_level="DEBUG"
     )
 
 

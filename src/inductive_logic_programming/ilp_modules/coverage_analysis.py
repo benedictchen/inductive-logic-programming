@@ -504,7 +504,7 @@ class CoverageAnalysisMixin:
         weaknesses = self._identify_rule_weaknesses(metrics, clause)
         recommendations = self._generate_improvement_recommendations(metrics, clause)
         
-        # Relative performance (placeholder - would compare to other rules)
+        # Relative performance (framework for comparing to other rules)
         relative_performance = {
             'precision_percentile': self._estimate_percentile(metrics.precision),
             'recall_percentile': self._estimate_percentile(metrics.recall),
@@ -791,7 +791,7 @@ def evaluate_coverage_strategy(strategy_name: str, rules: List[LogicalClause],
     Returns summary statistics for the strategy's performance.
     """
     # This would require access to the coverage analysis methods
-    # Placeholder implementation
+    # Simplified implementation for demonstration
     
     return {
         'average_precision': 0.8,

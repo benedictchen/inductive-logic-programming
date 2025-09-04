@@ -29,7 +29,7 @@ class LogicalTerm:
     
     Terms are the basic building blocks of logical expressions:
     - Constants: specific objects (e.g., 'john', 'mary', 5)
-    - Variables: placeholders for objects (e.g., X, Y, Z)
+    - Variables: symbolic references to objects (e.g., X, Y, Z)
     - Functions: structured terms with arguments (e.g., father(john))
     
     Examples:

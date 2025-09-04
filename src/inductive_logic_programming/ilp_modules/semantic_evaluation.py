@@ -801,7 +801,7 @@ class SemanticEvaluationMixin(ABC):
         """
         Clause Specialization with Multiple Algorithms
         
-        Uses CompleteILPImplementation to provide research-backed specialization:
+        Uses FOILProgolImplementation to provide research-backed specialization:
         - FOIL_ORIGINAL: Quinlan (1990) information gain specialization
         - CONSTRAINT_LITERALS: Constraint-based literal addition
         - VARIABLE_REFINEMENT: Variable binding refinement
@@ -809,10 +809,10 @@ class SemanticEvaluationMixin(ABC):
         
         Configured via self.config.specialization_method
         """
-        from .complete_ilp_implementation import CompleteILPImplementation, Clause, Atom
+        from .foil_progol_implementation import FOILProgolImplementation, Clause, Atom
         
         # Initialize complete ILP implementation with current config
-        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        complete_ilp = FOILProgolImplementation(getattr(self, 'config', None))
         
         # Convert LogicalClause to internal Clause format
         internal_clause = self._convert_logical_clause_to_internal(clause)
@@ -838,7 +838,7 @@ class SemanticEvaluationMixin(ABC):
         """
         Clause Generalization with Multiple Approaches
         
-        Uses CompleteILPImplementation to provide research-backed generalization:
+        Uses FOILProgolImplementation to provide research-backed generalization:
         - REMOVE_LITERALS: Muggleton (1994) literal removal
         - VARIABLE_GENERALIZATION: Variable substitution generalization
         - PREDICATE_ABSTRACTION: Predicate hierarchy climbing
@@ -846,10 +846,10 @@ class SemanticEvaluationMixin(ABC):
         
         Configured via self.config.generalization_method
         """
-        from .complete_ilp_implementation import CompleteILPImplementation, Clause, Atom
+        from .foil_progol_implementation import FOILProgolImplementation, Clause, Atom
         
         # Initialize complete ILP implementation with current config
-        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        complete_ilp = FOILProgolImplementation(getattr(self, 'config', None))
         
         # Convert LogicalClause to internal format
         internal_clause = self._convert_logical_clause_to_internal(clause)
@@ -872,7 +872,7 @@ class SemanticEvaluationMixin(ABC):
         """
         Robinson's Unification with Multiple Variants
         
-        Uses CompleteILPImplementation to provide research-backed unification:
+        Uses FOILProgolImplementation to provide research-backed unification:
         - ROBINSON_BASIC: Robinson (1965) basic unification algorithm
         - ROBINSON_OCCURS_CHECK: Robinson (1965) with occurs check
         - TYPE_AWARE: Type-aware unification with constraints
@@ -880,10 +880,10 @@ class SemanticEvaluationMixin(ABC):
         
         Configured via self.config.unification_method
         """
-        from .complete_ilp_implementation import CompleteILPImplementation, Atom, Substitution
+        from .foil_progol_implementation import FOILProgolImplementation, Atom, Substitution
         
         # Initialize complete ILP implementation with current config
-        complete_ilp = CompleteILPImplementation(getattr(self, 'config', None))
+        complete_ilp = FOILProgolImplementation(getattr(self, 'config', None))
         
         # Convert LogicalAtoms to internal Atom format
         internal_atom1 = self._convert_logical_atom_to_internal(atom1)
@@ -905,7 +905,7 @@ class SemanticEvaluationMixin(ABC):
     
     def _convert_logical_clause_to_internal(self, logical_clause: LogicalClause) -> 'Clause':
         """Convert LogicalClause to internal Clause format"""
-        from .complete_ilp_implementation import Clause, Atom
+        from .foil_progol_implementation import Clause, Atom
         
         # Convert head
         head_atom = Atom(
@@ -948,7 +948,7 @@ class SemanticEvaluationMixin(ABC):
     
     def _convert_logical_atom_to_internal(self, logical_atom: LogicalAtom) -> 'Atom':
         """Convert LogicalAtom to internal Atom format"""
-        from .complete_ilp_implementation import Atom
+        from .foil_progol_implementation import Atom
         
         return Atom(
             predicate=logical_atom.predicate,
