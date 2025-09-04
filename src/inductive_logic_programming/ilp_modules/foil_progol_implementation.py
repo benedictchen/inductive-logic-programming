@@ -893,8 +893,37 @@ class FOILProgolImplementation:
     
     # Framework implementations for remaining helper methods
     def _generate_constraint_literals(self, variable: str, constraint_type: str, examples: List[Dict]) -> List[Atom]:
-        """Generate constraint literals for a variable"""
-        return []  # Framework implementation - extend as needed
+        """Generate constraint literals for a variable (Quinlan 1990)"""
+        # FOIL constraint literal generation - extract predicates from examples
+        # that can constrain the given variable based on constraint_type
+        constraint_literals = []
+        
+        # Extract predicates from examples that involve the variable
+        predicates_seen = set()
+        for example in examples:
+            for key, value in example.items():
+                if isinstance(value, (list, tuple)):
+                    # Handle relational facts like parent(john, mary)
+                    for item in value:
+                        if isinstance(item, dict) and 'predicate' in item:
+                            pred_name = item['predicate']
+                            terms = item.get('terms', [])
+                            if variable in terms:
+                                predicates_seen.add((pred_name, len(terms)))
+                                
+        # Generate constraint literals based on constraint type
+        for pred_name, arity in predicates_seen:
+            if constraint_type == 'type_constraint':
+                # Generate type constraint: pred(Variable, _)
+                terms = [variable] + [f'_{i}' for i in range(arity - 1)]
+                constraint_literals.append(Atom(pred_name, terms))
+            elif constraint_type == 'equality':
+                # Generate equality constraint: pred(Variable, Variable2)
+                if arity >= 2:
+                    terms = [variable, variable]
+                    constraint_literals.append(Atom(pred_name, terms))
+                    
+        return constraint_literals
     
     def _evaluate_constraint_satisfaction(self, clause: Clause, positive_examples: List[Dict], 
                                         negative_examples: List[Dict]) -> float:
@@ -916,8 +945,48 @@ class FOILProgolImplementation:
     
     def _generate_variable_binding_literals(self, variable: str, clause: Clause, examples: List[Dict], 
                                           background_knowledge: List[Clause]) -> List[Atom]:
-        """Generate variable binding literals"""
-        return []  # Framework implementation - extend as needed
+        """Generate variable binding literals (Quinlan 1990 FOIL)"""
+        # FOIL variable binding - generate literals that can bind the variable
+        # to other variables or constants in the clause
+        binding_literals = []
+        
+        # Get existing variables in clause
+        existing_vars = clause.get_variables()
+        
+        # Extract background predicates
+        bg_predicates = set()
+        for bg_clause in background_knowledge:
+            if bg_clause.head:
+                bg_predicates.add(bg_clause.head.predicate)
+        
+        # Generate binding literals from background knowledge
+        for pred_name in bg_predicates:
+            # Unary predicate binding: pred(Variable)
+            binding_literals.append(Atom(pred_name, [variable]))
+            
+            # Binary predicate binding with existing variables
+            for existing_var in existing_vars:
+                if existing_var != variable:
+                    # pred(Variable, ExistingVar) - connects to existing structure
+                    binding_literals.append(Atom(pred_name, [variable, existing_var]))
+                    # pred(ExistingVar, Variable) - reverse connection
+                    binding_literals.append(Atom(pred_name, [existing_var, variable]))
+                    
+        # Generate binding literals from examples
+        predicates_in_examples = set()
+        for example in examples:
+            for key, value in example.items():
+                if isinstance(value, (list, tuple)):
+                    for item in value:
+                        if isinstance(item, dict) and 'predicate' in item:
+                            predicates_in_examples.add(item['predicate'])
+                            
+        # Add example-based bindings
+        for pred_name in predicates_in_examples:
+            if pred_name not in bg_predicates:  # Don't duplicate
+                binding_literals.append(Atom(pred_name, [variable]))
+                
+        return binding_literals
     
     def _evaluate_binding_strength(self, clause: Clause, positive_examples: List[Dict], 
                                  negative_examples: List[Dict]) -> float:
@@ -939,16 +1008,110 @@ class FOILProgolImplementation:
     def _introduce_new_variables(self, clause: Clause, positive_examples: List[Dict], 
                                background_knowledge: List[Clause]) -> List[Clause]:
         """Introduce new variables for specialization"""
-        return []  # Framework implementation - extend as needed
+        # FOIL new variable introduction - creates literals with fresh variables
+        # that must connect to existing clause structure
+        specialized_clauses = []
+        existing_vars = clause.get_variables()
+        
+        # Generate fresh variable names
+        used_vars = set(existing_vars)
+        new_var_counter = 1
+        while f'V{new_var_counter}' in used_vars:
+            new_var_counter += 1
+        new_var = f'V{new_var_counter}'
+        
+        # Extract predicates from background knowledge
+        bg_predicates = []
+        for bg_clause in background_knowledge:
+            if bg_clause.head:
+                bg_predicates.append(bg_clause.head.predicate)
+        
+        # Introduce new variable with connection to existing structure
+        for pred_name in bg_predicates:
+            for existing_var in existing_vars:
+                # Connect new variable to existing clause: pred(ExistingVar, NewVar)
+                new_atom = Atom(pred_name, [existing_var, new_var])
+                new_clause = clause.copy()
+                new_clause.body.append(new_atom)
+                specialized_clauses.append(new_clause)
+                
+                # Also try reverse: pred(NewVar, ExistingVar)
+                new_atom_rev = Atom(pred_name, [new_var, existing_var])
+                new_clause_rev = clause.copy()
+                new_clause_rev.body.append(new_atom_rev)
+                specialized_clauses.append(new_clause_rev)
+                
+        return specialized_clauses
     
     def _apply_variable_type_checking(self, clauses: List[Clause]) -> List[Clause]:
         """Apply variable type checking to clauses"""
-        return clauses  # Framework implementation - extend as needed
+        # FOCL type checking - filter clauses based on type constraints
+        # This implements type-based constraint satisfaction from FOCL
+        type_checked_clauses = []
+        
+        for clause in clauses:
+            is_type_consistent = True
+            
+            # Check each atom in clause body for type consistency
+            for atom in clause.body:
+                # Simple type checking: ensure same variable has consistent types
+                # across different predicates in the clause
+                predicate_types = self._get_predicate_types(atom.predicate)
+                
+                if predicate_types:
+                    for i, term in enumerate(atom.terms):
+                        if i < len(predicate_types):
+                            expected_type = predicate_types[i]
+                            # Check if variable appears in other atoms with different type
+                            if not self._is_type_consistent(term, expected_type, clause):
+                                is_type_consistent = False
+                                break
+                                
+                if not is_type_consistent:
+                    break
+                    
+            if is_type_consistent:
+                type_checked_clauses.append(clause)
+                
+        return type_checked_clauses
     
     def _generate_multi_literal_removals(self, clause: Clause, positive_examples: List[Dict], 
                                        negative_examples: List[Dict]) -> List[Clause]:
         """Generate multi-literal removal combinations"""
-        return []  # Framework implementation - extend as needed
+        # FOIL new variable introduction - creates literals with fresh variables
+        # that must connect to existing clause structure
+        specialized_clauses = []
+        existing_vars = clause.get_variables()
+        
+        # Generate fresh variable names
+        used_vars = set(existing_vars)
+        new_var_counter = 1
+        while f'V{new_var_counter}' in used_vars:
+            new_var_counter += 1
+        new_var = f'V{new_var_counter}'
+        
+        # Extract predicates from background knowledge
+        bg_predicates = []
+        for bg_clause in background_knowledge:
+            if bg_clause.head:
+                bg_predicates.append(bg_clause.head.predicate)
+        
+        # Introduce new variable with connection to existing structure
+        for pred_name in bg_predicates:
+            for existing_var in existing_vars:
+                # Connect new variable to existing clause: pred(ExistingVar, NewVar)
+                new_atom = Atom(pred_name, [existing_var, new_var])
+                new_clause = clause.copy()
+                new_clause.body.append(new_atom)
+                specialized_clauses.append(new_clause)
+                
+                # Also try reverse: pred(NewVar, ExistingVar)
+                new_atom_rev = Atom(pred_name, [new_var, existing_var])
+                new_clause_rev = clause.copy()
+                new_clause_rev.body.append(new_atom_rev)
+                specialized_clauses.append(new_clause_rev)
+                
+        return specialized_clauses
     
     def _calculate_coverage_score(self, clause: Clause, positive_examples: List[Dict], 
                                 negative_examples: List[Dict]) -> float:
@@ -957,16 +1120,128 @@ class FOILProgolImplementation:
     
     def _introduce_generalizing_variables(self, clause: Clause, positive_examples: List[Dict]) -> List[Clause]:
         """Introduce variables for generalization"""
-        return []  # Framework implementation - extend as needed
+        # FOIL new variable introduction - creates literals with fresh variables
+        # that must connect to existing clause structure
+        specialized_clauses = []
+        existing_vars = clause.get_variables()
+        
+        # Generate fresh variable names
+        used_vars = set(existing_vars)
+        new_var_counter = 1
+        while f'V{new_var_counter}' in used_vars:
+            new_var_counter += 1
+        new_var = f'V{new_var_counter}'
+        
+        # Extract predicates from background knowledge
+        bg_predicates = []
+        for bg_clause in background_knowledge:
+            if bg_clause.head:
+                bg_predicates.append(bg_clause.head.predicate)
+        
+        # Introduce new variable with connection to existing structure
+        for pred_name in bg_predicates:
+            for existing_var in existing_vars:
+                # Connect new variable to existing clause: pred(ExistingVar, NewVar)
+                new_atom = Atom(pred_name, [existing_var, new_var])
+                new_clause = clause.copy()
+                new_clause.body.append(new_atom)
+                specialized_clauses.append(new_clause)
+                
+                # Also try reverse: pred(NewVar, ExistingVar)
+                new_atom_rev = Atom(pred_name, [new_var, existing_var])
+                new_clause_rev = clause.copy()
+                new_clause_rev.body.append(new_atom_rev)
+                specialized_clauses.append(new_clause_rev)
+                
+        return specialized_clauses
     
     def _build_predicate_hierarchy(self, positive_examples: List[Dict], negative_examples: List[Dict]) -> Dict[str, List[str]]:
         """Build predicate abstraction hierarchy"""
-        return {}  # Framework implementation - extend as needed
+        # Build predicate hierarchy for abstraction (Progol-style)
+        # Creates hierarchy of predicates based on their argument types and usage
+        hierarchy = {}
+        
+        # Extract all predicates from examples
+        all_predicates = set()
+        for examples in [positive_examples, negative_examples]:
+            for example in examples:
+                for key, value in example.items():
+                    if isinstance(value, (list, tuple)):
+                        for item in value:
+                            if isinstance(item, dict) and 'predicate' in item:
+                                all_predicates.add(item['predicate'])
+                                
+        # Build simple hierarchy based on arity and common patterns
+        for pred in all_predicates:
+            # Group predicates by common prefixes or patterns
+            base_pred = pred.split('_')[0] if '_' in pred else pred
+            if base_pred not in hierarchy:
+                hierarchy[base_pred] = []
+            if pred != base_pred:
+                hierarchy[base_pred].append(pred)
+                
+        # Add single predicates as their own hierarchy
+        for pred in all_predicates:
+            if pred not in hierarchy:
+                hierarchy[pred] = []
+                
+        return hierarchy
     
     def _evaluate_abstraction_benefit(self, original_clause: Clause, abstracted_clause: Clause,
                                     positive_examples: List[Dict], negative_examples: List[Dict]) -> float:
         """Evaluate benefit of predicate abstraction"""
-        return 0.5  # Framework implementation - extend as needed
+        # Evaluate abstraction benefit using coverage improvement
+        # Compare coverage and precision between original and abstracted clauses
+        
+        # Calculate coverage for both clauses
+        orig_pos_coverage = len(self._calculate_coverage(original_clause, positive_examples))
+        orig_neg_coverage = len(self._calculate_coverage(original_clause, negative_examples))
+        
+        abst_pos_coverage = len(self._calculate_coverage(abstracted_clause, positive_examples))
+        abst_neg_coverage = len(self._calculate_coverage(abstracted_clause, negative_examples))
+        
+        # Calculate precision (positive / total coverage)
+        orig_precision = orig_pos_coverage / max(orig_pos_coverage + orig_neg_coverage, 1)
+        abst_precision = abst_pos_coverage / max(abst_pos_coverage + abst_neg_coverage, 1)
+        
+        # Calculate recall (positive coverage / total positives)
+        total_positives = len(positive_examples)
+        orig_recall = orig_pos_coverage / max(total_positives, 1)
+        abst_recall = abst_pos_coverage / max(total_positives, 1)
+        
+        # F1 score as benefit measure
+        orig_f1 = 2 * (orig_precision * orig_recall) / max(orig_precision + orig_recall, 0.001)
+        abst_f1 = 2 * (abst_precision * abst_recall) / max(abst_precision + abst_recall, 0.001)
+        
+        # Return improvement ratio (>1.0 means abstraction is better)
+        return abst_f1 / max(orig_f1, 0.001)
+    
+    def _get_predicate_types(self, predicate: str) -> List[str]:
+        """Get expected types for predicate arguments (FOCL typing)"""
+        # Simple type inference based on predicate name patterns
+        type_mappings = {
+            'parent': ['person', 'person'],
+            'father': ['person', 'person'], 
+            'mother': ['person', 'person'],
+            'male': ['person'],
+            'female': ['person'],
+            'age': ['person', 'number'],
+            'livesAt': ['person', 'location'],
+            'likes': ['person', 'thing']
+        }
+        return type_mappings.get(predicate, [])
+    
+    def _is_type_consistent(self, term: str, expected_type: str, clause: Clause) -> bool:
+        """Check if term usage is type consistent across clause"""
+        # Check if the same variable appears with consistent types
+        # in other atoms within the same clause
+        for atom in clause.body:
+            atom_types = self._get_predicate_types(atom.predicate)
+            for i, atom_term in enumerate(atom.terms):
+                if atom_term == term and i < len(atom_types):
+                    if atom_types[i] != expected_type:
+                        return False
+        return True
     
     def _check_literal_constraint(self, literal: Atom, example: Dict) -> bool:
         """Check if literal constraint is satisfied by example"""

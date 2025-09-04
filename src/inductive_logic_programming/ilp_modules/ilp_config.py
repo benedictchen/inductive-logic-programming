@@ -54,7 +54,7 @@ others are quick but might miss details.
 • FOIL: Fast, greedy, good for large datasets
 • Progol: Thorough, optimal, better for complex rules
 • Hybrid: Combines strengths of multiple approaches
-• Custom: User-defined algorithm combinations
+• Custom: Configurable algorithm combinations
 
 🧠 **Semantic Settings**:
 • Entailment: Strict logical derivation (most accurate)
