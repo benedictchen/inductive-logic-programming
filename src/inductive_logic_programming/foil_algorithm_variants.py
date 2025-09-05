@@ -1,4 +1,36 @@
 """
+📋 Foil Algorithm Variants
+===========================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🎯 ELI5 Summary:
+This is the brain of our operation! Just like how your brain processes information 
+and makes decisions, this file contains the main algorithm that does the mathematical 
+thinking. It takes in data, processes it according to research principles, and produces 
+intelligent results.
+
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+📋 Component Integration:
+========================
+    ┌──────────┐
+    │   This   │
+    │Component │ ←→ Other Components
+    └──────────┘
+         ↑↓
+    System Integration
+
+"""
+"""
 🎯 FOIL Algorithm Variants - Multiple Implementation Approaches
 =========================================================
 
@@ -20,7 +52,7 @@ from enum import Enum
 
 from .ilp_core import LogicalTerm, LogicalAtom, LogicalClause, Example
 from .foil_comprehensive_config import (
-    FOILComprehensiveConfig, 
+    FOILConfig, 
     InformationGainMethod, 
     CoverageTestingMethod,
     VariableBindingStrategy
@@ -47,7 +79,7 @@ class FOILAlgorithmVariants:
     - Coverage testing approaches
     """
     
-    def __init__(self, config: FOILComprehensiveConfig):
+    def __init__(self, config: FOILConfig):
         self.config = config
         self.predicates = set()
         self.background_knowledge = []
@@ -396,4 +428,4 @@ class FOILAlgorithmVariants:
 
 
 if __name__ == "__main__":
-    print("🎯 FOIL Algorithm Variants - Multiple implementation approaches available")
+    pass  # Implementation needed

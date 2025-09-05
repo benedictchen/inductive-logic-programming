@@ -49,15 +49,15 @@ def test_foil_algorithm_variants():
     for name, config in configs_to_test:
         try:
             foil = FOILLearner(foil_config=config)
-            print(f"✅ {name}: WORKING")
+            # Removed print spam: f"...
             success_count += 1
         except Exception as e:
             print(f"❌ {name}: FAILED - {e}")
     
-    print(f"\n📊 Configuration Test Results: {success_count}/{len(configs_to_test)}")
+    # Removed print spam: f"\n...}")
     
     # Test 2: Algorithm Variant Methods Exist
-    print("\n🔧 Testing Algorithm Variant Methods:")
+    # Removed print spam: "\n...
     solutions = FOILAlgorithmVariants(create_research_accurate_config())
     
     required_methods = [
@@ -75,12 +75,12 @@ def test_foil_algorithm_variants():
     method_count = 0
     for method_name in required_methods:
         if hasattr(solutions, method_name):
-            print(f"✅ {method_name}: EXISTS")
+            # Removed print spam: f"...
             method_count += 1
         else:
             print(f"❌ {method_name}: MISSING")
     
-    print(f"\n📊 Method Test Results: {method_count}/{len(required_methods)}")
+    # Removed print spam: f"\n...}")
     
     # Test 3: Integration with Original FOIL
     print("\n🔗 Testing Integration with Original FOIL:")
@@ -100,14 +100,14 @@ def test_foil_algorithm_variants():
         )
         foil.add_example(male_atom, True)
         
-        print("✅ Examples added successfully")
-        print("✅ FOIL integration working with algorithm variants")
+        # # Removed print spam: "...
+        # # Removed print spam: "...
         
     except Exception as e:
         print(f"❌ Integration failed: {e}")
         return False
     
-    print(f"\n🎯 FINAL RESULT:")
+    # Removed print spam: f"\n...
     total_tests = 3
     passed_tests = (
         1 if success_count == len(configs_to_test) else 0
@@ -116,9 +116,9 @@ def test_foil_algorithm_variants():
     ) + 1  # Integration test passed
     
     if passed_tests == total_tests:
-        print(f"✅ ALL {passed_tests}/{total_tests} TESTS PASSED!")
-        print("🚀 FOIL integration testing complete")
-        print("🎯 Algorithm variants tested and functional")
+        # Removed print spam: f"...
+        # # Removed print spam: "...
+        # Removed print spam: "...
         return True
     else:
         print(f"⚠️  {passed_tests}/{total_tests} tests passed")

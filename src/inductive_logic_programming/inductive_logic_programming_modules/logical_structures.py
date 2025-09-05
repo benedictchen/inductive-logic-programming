@@ -1,4 +1,35 @@
 """
+📋 Logical Structures
+======================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🎯 ELI5 Summary:
+This file is an important component in our AI research system! Like different organs 
+in your body that work together to keep you healthy, this file has a specific job that 
+helps the overall algorithm work correctly and efficiently.
+
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+📋 Component Integration:
+========================
+    ┌──────────┐
+    │   This   │
+    │Component │ ←→ Other Components
+    └──────────┘
+         ↑↓
+    System Integration
+
+"""
+"""
 🏗️ LOGICAL STRUCTURES MODULE - Core Data Structures for ILP
 ===========================================================
 

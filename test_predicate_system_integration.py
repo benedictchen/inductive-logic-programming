@@ -79,7 +79,7 @@ class ModularILPSystem(PredicateSystemMixin):
     def generate_hypotheses(self, target_predicate: str):
         """Generate hypotheses using predicate system compatibility"""
         
-        print(f"\n🔍 Generating hypotheses for: {target_predicate}")
+        # Removed print spam: f"\n...
         
         hypotheses = []
         
@@ -107,7 +107,7 @@ class ModularILPSystem(PredicateSystemMixin):
     def refine_hypotheses(self, hypotheses):
         """Refine hypotheses using theta-subsumption"""
         
-        print(f"\n⚡ Refining {len(hypotheses)} hypotheses using theta-subsumption")
+        # Removed print spam: f"\n...} hypotheses using theta-subsumption")
         
         refined = []
         
@@ -133,7 +133,7 @@ class ModularILPSystem(PredicateSystemMixin):
         
         vocab = self.get_predicate_vocabulary()
         
-        print(f"\n📊 System Status:")
+        # Removed print spam: f"\n...
         print(f"   Background clauses: {len(self.background_knowledge)}")
         print(f"   Positive examples: {len(self.positive_examples)}")
         print(f"   Negative examples: {len(self.negative_examples)}")
@@ -237,12 +237,12 @@ def demo_family_relationships():
         refined_hypotheses = ilp.refine_hypotheses(hypotheses)
     
     # Validate predicate system
-    print("\n✅ Validating predicate system...")
+    # Removed print spam: "\n...
     report = ilp.validate_predicate_system()
     if report['errors']:
         print("❌ Validation errors found!")
     else:
-        print("✅ Predicate system is consistent")
+        # # Removed print spam: "...
 
 
 def demo_business_domain():
@@ -291,7 +291,7 @@ def demo_business_domain():
 def demo_theta_subsumption():
     """Demonstrate theta-subsumption capabilities"""
     
-    print("\n🎯 THETA-SUBSUMPTION DEMO")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     ilp = ModularILPSystem()
@@ -330,7 +330,7 @@ def demo_theta_subsumption():
     
     # Test subsumption
     subsumes = ilp.theta_subsumes(general, specific)
-    print(f"\n✅ Theta-subsumption result: {subsumes}")
+    # Removed print spam: f"\n...
     
     # Show substitutions
     substitutions = ilp._find_theta_substitutions(general, specific)
@@ -353,12 +353,12 @@ def main():
         demo_business_domain()
         demo_theta_subsumption()
         
-        print("\n🎉 Integration demo complete")
+        # Removed print spam: "\n...
         print("=" * 70)
-        print("✅ Predicate system seamlessly integrates with ILP")
-        print("✅ Modular architecture enables domain flexibility")
-        print("✅ All predicate system features available to main system")
-        print("✅ Ready for production use!")
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
         
     except Exception as e:
         print(f"\n❌ INTEGRATION DEMO FAILED: {e}")

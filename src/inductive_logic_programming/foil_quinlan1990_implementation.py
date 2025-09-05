@@ -1,10 +1,21 @@
 """
+📋 Foil Quinlan1990 Implementation
+===================================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+"""
+"""
 🎯 FOIL RESEARCH-ACCURATE SOLUTIONS
 ======================================================================
 
 This module implements FOIL algorithm variants with
 complete research accuracy. Users can configure which approach to use
-via FOILComprehensiveConfig.
+via FOILConfig.
 
 🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
    benedict@benedictchen.com
@@ -115,7 +126,7 @@ from dataclasses import dataclass
 from collections import defaultdict
 
 from .foil_comprehensive_config import (
-    FOILComprehensiveConfig, 
+    FOILConfig, 
     InformationGainMethod,
     CoverageTestingMethod, 
     VariableBindingStrategy
@@ -145,7 +156,7 @@ class FOILResearchAccurateSolutions:
     following the mathematical formulations from the original paper.
     """
     
-    def __init__(self, config: FOILComprehensiveConfig):
+    def __init__(self, config: FOILConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(getattr(logging, config.log_level))
@@ -156,7 +167,7 @@ class FOILResearchAccurateSolutions:
         self.constants_cache = set()
         
     # ═══════════════════════════════════════════════════════════════════
-    # 🎯 SOLUTION SET 1: INFORMATION GAIN CALCULATION - ALL METHODS
+    # SOLUTION SET 1: INFORMATION GAIN CALCULATION - ALL METHODS
     # ═══════════════════════════════════════════════════════════════════
     
     def calculate_information_gain(self, literal: LogicalAtom, partial_rule: LogicalClause,
@@ -332,7 +343,7 @@ class FOILResearchAccurateSolutions:
         return p1 * (new_info - old_info)
     
     # ═══════════════════════════════════════════════════════════════════
-    # 🎯 SOLUTION SET 2: COVERAGE TESTING - ALL METHODS
+    # SOLUTION SET 2: COVERAGE TESTING - ALL METHODS
     # ═══════════════════════════════════════════════════════════════════
     
     def covers_example(self, clause: LogicalClause, example: Example, 
@@ -464,7 +475,7 @@ class FOILResearchAccurateSolutions:
         return True
     
     # ═══════════════════════════════════════════════════════════════════
-    # 🎯 SOLUTION SET 3: VARIABLE BINDING GENERATION - ALL STRATEGIES
+    # SOLUTION SET 3: VARIABLE BINDING GENERATION - ALL STRATEGIES
     # ═══════════════════════════════════════════════════════════════════
     
     def generate_variable_bindings(self, clause: LogicalClause, 
@@ -959,7 +970,7 @@ def test_all_fixme_solutions():
                 'success': True
             }
             
-            print(f"✅ {config_name}: Success")
+            # Removed print spam: f"...
             print(f"   Information Gain: {gain:.4f}")
             print(f"   Coverage Test: {coverage}")
             print(f"   Bindings Generated: {len(bindings)}")
@@ -975,14 +986,14 @@ def test_all_fixme_solutions():
 
 
 if __name__ == "__main__":
-    print("🎯 Testing FOIL algorithm variants implementation...")
+    # Removed print spam: "...
     results = test_all_fixme_solutions()
     
     successful_configs = sum(1 for r in results.values() if r.get('success', False))
     total_configs = len(results)
     
-    print(f"\n📊 Results: {successful_configs}/{total_configs} configurations successful")
-    print("🎯 FOIL algorithm testing complete")
+    # Removed print spam: f"\n...
+    # Removed print spam: "...
 
 
 # ═══════════════════════════════════════════════════════════════════

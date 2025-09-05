@@ -1,4 +1,21 @@
 """
+⚙️ Ilp Config
+==============
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+"""
+"""
 🔧 ILP CONFIGURATION SYSTEM - Algorithm Selection & Tuning
 =========================================================
 
@@ -410,7 +427,7 @@ class PresetConfigs:
         )
     
     @staticmethod
-    def research_comprehensive() -> ILPConfig:
+    def simplified_analysis() -> ILPConfig:
         """Comprehensive configuration combining all research methods"""
         return ILPConfig(
             specialization_method=SpecializationMethod.HYBRID_SPECIALIZATION,

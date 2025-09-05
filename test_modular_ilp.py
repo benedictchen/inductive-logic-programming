@@ -93,7 +93,7 @@ class TestModularILPBasics(unittest.TestCase):
         with self.assertRaises(ValueError):
             InductiveLogicProgrammer(semantic_setting='invalid_setting')
         
-        print("✅ Basic initialization tests passed")
+        # # Removed print spam: "...
     
     def test_logical_structures(self):
         """Test logical structures creation and manipulation"""
@@ -134,7 +134,7 @@ class TestModularILPBasics(unittest.TestCase):
         self.assertIsInstance(rule, LogicalClause)
         self.assertEqual(len(rule.body), 2)
         
-        print("✅ Logical structures tests passed")
+        # # Removed print spam: "...
     
     def test_vocabulary_management(self):
         """Test vocabulary tracking and management"""
@@ -157,7 +157,7 @@ class TestModularILPBasics(unittest.TestCase):
         self.assertIn("pizza", ilp.vocabulary['constants'])
         self.assertIn("X", ilp.vocabulary['variables'])
         
-        print("✅ Vocabulary management tests passed")
+        # # Removed print spam: "...
 
 
 class TestBackgroundKnowledgeAndExamples(unittest.TestCase):
@@ -197,7 +197,7 @@ class TestBackgroundKnowledgeAndExamples(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.ilp.add_background_knowledge("invalid_clause")
         
-        print("✅ Background knowledge tests passed")
+        # # Removed print spam: "...
     
     def test_add_examples(self):
         """Test adding positive and negative examples"""
@@ -226,7 +226,7 @@ class TestBackgroundKnowledgeAndExamples(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.ilp.add_example("invalid_atom", True)
         
-        print("✅ Example addition tests passed")
+        # # Removed print spam: "...
 
 
 class TestFactoryFunctions(unittest.TestCase):
@@ -246,7 +246,7 @@ class TestFactoryFunctions(unittest.TestCase):
         self.assertEqual(edu_ilp.noise_tolerance, 0.05)
         self.assertEqual(edu_ilp.semantic_setting, 'normal')
         
-        print("✅ Educational ILP factory tests passed")
+        # # Removed print spam: "...
     
     def test_research_ilp(self):
         """Test research ILP factory function"""
@@ -262,7 +262,7 @@ class TestFactoryFunctions(unittest.TestCase):
         self.assertEqual(research_ilp.noise_tolerance, 0.15)
         self.assertEqual(research_ilp.semantic_setting, 'nonmonotonic')
         
-        print("✅ Research ILP factory tests passed")
+        # # Removed print spam: "...
     
     def test_production_ilp(self):
         """Test production ILP factory function"""
@@ -278,7 +278,7 @@ class TestFactoryFunctions(unittest.TestCase):
         self.assertEqual(prod_ilp.noise_tolerance, 0.12)
         self.assertEqual(prod_ilp.semantic_setting, 'definite')
         
-        print("✅ Production ILP factory tests passed")
+        # # Removed print spam: "...
     
     def test_custom_ilp(self):
         """Test custom ILP factory function"""
@@ -295,7 +295,7 @@ class TestFactoryFunctions(unittest.TestCase):
         self.assertEqual(custom_ilp.confidence_threshold, 0.95)
         self.assertEqual(custom_ilp.semantic_setting, 'nonmonotonic')
         
-        print("✅ Custom ILP factory tests passed")
+        # # Removed print spam: "...
 
 
 class TestIndividualMixins(unittest.TestCase):
@@ -320,7 +320,7 @@ class TestIndividualMixins(unittest.TestCase):
         for mixin in expected_mixins:
             self.assertIsInstance(ilp, mixin)
         
-        print("✅ Mixin inheritance tests passed")
+        # # Removed print spam: "...
     
     def test_custom_mixin_combinations(self):
         """Test creating custom systems with specific mixin combinations"""
@@ -353,7 +353,7 @@ class TestIndividualMixins(unittest.TestCase):
         self.assertNotIsInstance(custom_system, SemanticEvaluationMixin)
         self.assertNotIsInstance(custom_system, RuleRefinementMixin)
         
-        print("✅ Custom mixin combination tests passed")
+        # # Removed print spam: "...
 
 
 class TestLearningFunctionality(unittest.TestCase):
@@ -453,7 +453,7 @@ class TestLearningFunctionality(unittest.TestCase):
                 self.assertIsInstance(rule, LogicalClause)
                 self.assertTrue(hasattr(rule, 'confidence'))
             
-            print(f"✅ Basic rule learning passed - learned {len(learned_rules)} rules")
+            # Removed print spam: f"...} rules")
             
         except Exception as e:
             print(f"⚠️ Learning failed (this may be expected in test environment): {e}")
@@ -471,7 +471,7 @@ class TestLearningFunctionality(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.ilp.learn_rules("nonexistent_predicate")
         
-        print("✅ Rule learning error handling tests passed")
+        # # Removed print spam: "...
 
 
 class TestQueryAndExplanation(unittest.TestCase):
@@ -523,7 +523,7 @@ class TestQueryAndExplanation(unittest.TestCase):
         self.assertEqual(confidence_empty, 0.0)
         self.assertEqual(len(proof_rules_empty), 0)
         
-        print("✅ Query functionality tests passed")
+        # # Removed print spam: "...
     
     def test_explanation_functionality(self):
         """Test explanation generation"""
@@ -538,7 +538,7 @@ class TestQueryAndExplanation(unittest.TestCase):
         # First explanation should be the query itself
         self.assertIn("Query:", explanations[0])
         
-        print("✅ Explanation functionality tests passed")
+        # # Removed print spam: "...
 
 
 class TestIntegrationAndCompatibility(unittest.TestCase):
@@ -569,7 +569,7 @@ class TestIntegrationAndCompatibility(unittest.TestCase):
         self.assertIn("a", ilp.vocabulary['constants'])
         self.assertIn("b", ilp.vocabulary['constants'])
         
-        print("✅ Module integration tests passed")
+        # # Removed print spam: "...
     
     def test_backward_compatibility(self):
         """Test backward compatibility with original API"""
@@ -596,7 +596,7 @@ class TestIntegrationAndCompatibility(unittest.TestCase):
         # Test that learning statistics are available
         ilp.print_learning_statistics()
         
-        print("✅ Backward compatibility tests passed")
+        # # Removed print spam: "...
 
 
 class TestPerformanceAndEdgeCases(unittest.TestCase):
@@ -617,7 +617,7 @@ class TestPerformanceAndEdgeCases(unittest.TestCase):
         self.assertEqual(len(ilp.vocabulary['predicates']), 100)
         self.assertEqual(len(ilp.vocabulary['constants']), 100)
         
-        print("✅ Large vocabulary handling tests passed")
+        # # Removed print spam: "...
     
     def test_edge_cases(self):
         """Test various edge cases"""
@@ -636,7 +636,7 @@ class TestPerformanceAndEdgeCases(unittest.TestCase):
         self.assertEqual(stats['clauses_generated'], 0)
         self.assertEqual(stats['learning_time_seconds'], 0.0)
         
-        print("✅ Edge case tests passed")
+        # # Removed print spam: "...
 
 
 class TestComprehensiveScenario(unittest.TestCase):
@@ -692,7 +692,7 @@ class TestComprehensiveScenario(unittest.TestCase):
             # This might fail in a simplified test environment, which is acceptable
             try:
                 learned_rules = ilp.learn_rules("father")
-                print(f"   ✅ Successfully learned {len(learned_rules)} rules")
+                # Removed print spam: f"   ...} rules")
                 
                 # Test querying if we learned rules
                 if learned_rules:
@@ -708,7 +708,7 @@ class TestComprehensiveScenario(unittest.TestCase):
             self.assertGreater(len(ilp.examples), 0)
             self.assertGreater(len(ilp.vocabulary['predicates']), 0)
             
-            print("✅ Comprehensive scenario test completed")
+            # # Removed print spam: "...
             
         except Exception as e:
             print(f"❌ Comprehensive scenario failed: {e}")
@@ -760,7 +760,7 @@ def run_comprehensive_tests():
         failed_tests += suite_failed
         
         if suite_failed == 0:
-            print(f"✅ All {suite_tests} tests passed")
+            # Removed print spam: f"...
         else:
             print(f"⚠️ {suite_passed}/{suite_tests} tests passed, {suite_failed} failed")
             
@@ -785,12 +785,12 @@ def run_comprehensive_tests():
     print(f"Duration: {duration:.2f} seconds")
     
     if failed_tests == 0:
-        print("\n🎉 ALL TESTS PASSED! 🎉")
-        print("✅ Modular ILP system is fully functional")
-        print("✅ All imports work correctly")
-        print("✅ All mixin functionality is preserved")
-        print("✅ Factory functions create working ILP systems")
-        print("✅ No functionality has been lost in modularization")
+        # Removed print spam: "\n🎉 ALL TESTS PASSED! ...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
     else:
         print(f"\n⚠️ {failed_tests} tests failed - see details above")
         print("Some failures may be expected in simplified test environments")
@@ -807,5 +807,5 @@ if __name__ == "__main__":
         print("\n⚠️ Some tests failed - this may be normal for complex ILP functionality")
         sys.exit(1)
     else:
-        print("\n🎉 All tests passed successfully!")
+        # Removed print spam: "\n...
         sys.exit(0)

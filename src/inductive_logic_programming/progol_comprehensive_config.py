@@ -153,11 +153,12 @@ class CompressionEvaluation(Enum):
 
 
 @dataclass
-class ProgolComprehensiveConfig:
+class ProgolConfig:
     """
-    MASTER CONFIGURATION for all Progol research solutions.
+    Configuration for Progol inverse entailment approach.
     
-    Allows users to configure all aspects of Progol's inverse entailment approach.
+    Configures all aspects of Progol's learning algorithm following
+    Muggleton's 1995 framework.
     """
     
     # ============================================================================
@@ -274,14 +275,14 @@ class ProgolComprehensiveConfig:
     research_accuracy_checks: bool = True  # Runtime research accuracy validation
 
 
-def create_muggleton_accurate_config() -> ProgolComprehensiveConfig:
+def create_muggleton_accurate_config() -> ProgolConfig:
     """
     Create configuration that matches Muggleton (1995) Progol paper.
     
     Returns:
-        ProgolComprehensiveConfig: Research-accurate configuration
+        ProgolConfig: Research-accurate configuration
     """
-    return ProgolComprehensiveConfig(
+    return ProgolConfig(
         # Exact Muggleton approach
         inverse_entailment_method=InverseEntailmentMethod.MUGGLETON_ORIGINAL,
         bottom_clause_construction=BottomClauseConstruction.SATURATION_BASED,
@@ -308,14 +309,14 @@ def create_muggleton_accurate_config() -> ProgolComprehensiveConfig:
     )
 
 
-def create_performance_optimized_progol_config() -> ProgolComprehensiveConfig:
+def create_performance_optimized_progol_config() -> ProgolConfig:
     """
     Create Progol configuration optimized for speed.
     
     Returns:
-        ProgolComprehensiveConfig: Performance-optimized configuration
+        ProgolConfig: Performance-optimized configuration
     """
-    return ProgolComprehensiveConfig(
+    return ProgolConfig(
         # Faster methods
         inverse_entailment_method=InverseEntailmentMethod.CONSTRAINT_BASED,
         bottom_clause_construction=BottomClauseConstruction.DEPTH_LIMITED,
@@ -375,4 +376,4 @@ if __name__ == "__main__":
     for category, items in solutions.items():
         print(f"\n{category}:")
         for item in items:
-            print(f"  ✅ {item}")
+            # Removed print spam: f"  ...

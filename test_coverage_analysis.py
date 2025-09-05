@@ -83,10 +83,10 @@ def main():
     print(f"Examples: {len(pos_examples)} positive, {len(neg_examples)} negative")
     
     # Calculate comprehensive metrics
-    print(f"\n🔍 Calculating coverage metrics...")
+    # Removed print spam: f"\n...
     metrics = analyzer.calculate_comprehensive_metrics(rule, pos_examples, neg_examples)
     
-    print(f"\n📈 Coverage Metrics:")
+    # Removed print spam: f"\n...
     print(f"   • Precision: {metrics.precision:.3f}")
     print(f"   • Recall: {metrics.recall:.3f}")
     print(f"   • F1-Score: {metrics.f1_score:.3f}")
@@ -115,7 +115,7 @@ def main():
     analyzer.print_coverage_analysis_summary(report)
     
     # Test different coverage strategies
-    print(f"\n🔧 Testing Different Coverage Strategies:")
+    # Removed print spam: f"\n...
     strategies = ['standard', 'weighted', 'probabilistic', 'fuzzy']
     
     for strategy in strategies:

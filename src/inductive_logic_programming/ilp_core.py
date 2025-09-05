@@ -232,18 +232,18 @@ from dataclasses import dataclass
 import warnings
 
 # Import all modular components
-from .ilp_modules.logical_structures import (
+from .inductive_logic_programming_modules.logical_structures import (
     LogicalTerm, LogicalAtom, LogicalClause, Example,
     create_variable, create_constant, create_function, 
     create_atom, create_fact, create_rule, parse_term
 )
 
-from .ilp_modules.hypothesis_generation import HypothesisGenerationMixin
-from .ilp_modules.unification_engine import UnificationEngineMixin  
-from .ilp_modules.semantic_evaluation import SemanticEvaluationMixin
-from .ilp_modules.rule_refinement import RuleRefinementMixin
-from .ilp_modules.coverage_analysis import CoverageAnalysisMixin
-from .ilp_modules.predicate_system import PredicateSystemMixin
+from .inductive_logic_programming_modules.hypothesis_generation import HypothesisGenerationMixin
+from .inductive_logic_programming_modules.unification_engine import UnificationEngineMixin  
+from .inductive_logic_programming_modules.semantic_evaluation import SemanticEvaluationMixin
+from .inductive_logic_programming_modules.rule_refinement import RuleRefinementMixin
+from .inductive_logic_programming_modules.coverage_analysis import CoverageAnalysisMixin
+from .inductive_logic_programming_modules.predicate_system import PredicateSystemMixin
 
 warnings.filterwarnings('ignore')
 
@@ -592,7 +592,7 @@ class InductiveLogicProgrammer(
         if not target_positive:
             raise ValueError(f"No positive examples found for predicate '{target_predicate}'")
             
-        print(f"🎯 Learning rules for '{target_predicate}' with {len(target_positive)} positive examples, {len(target_negative)} negative examples")
+        # Removed print spam: f"...} positive examples, {len(target_negative)} negative examples")
         
         # Phase 1: Generate initial hypotheses using mixin
         print("🔬 Phase 1: Generating initial hypotheses...")
@@ -607,7 +607,7 @@ class InductiveLogicProgrammer(
                 hypotheses.append(fact)
         
         # Phase 2: Semantic evaluation using mixin
-        print("🔍 Phase 2: Evaluating hypotheses semantically...")
+        # Removed print spam: "...
         valid_hypotheses = []
         for hypothesis in hypotheses:
             try:
@@ -630,7 +630,7 @@ class InductiveLogicProgrammer(
             return hypotheses[:1] if hypotheses else []
         
         # Phase 3: Coverage analysis using mixin  
-        print("📊 Phase 3: Performing coverage analysis...")
+        # Removed print spam: "...
         analyzed_hypotheses = []
         for hypothesis in valid_hypotheses:
             try:
@@ -675,7 +675,7 @@ class InductiveLogicProgrammer(
         print(f"Generated {len(refined_hypotheses)} refined hypotheses")
         
         # Phase 5: Final rule selection
-        print("🏆 Phase 5: Selecting best rules...")
+        # Removed print spam: "...
         final_rules = self._select_best_rules(
             refined_hypotheses, target_positive, target_negative
         )
@@ -687,7 +687,7 @@ class InductiveLogicProgrammer(
         end_time = time.time()
         self.learning_stats['learning_time_seconds'] = end_time - start_time
         
-        print(f"✅ Learning complete! Selected {len(final_rules)} final rules")
+        # Removed print spam: f"...} final rules")
         print(f"⏱️ Total learning time: {self.learning_stats['learning_time_seconds']:.2f} seconds")
         
         return final_rules
@@ -804,7 +804,7 @@ class InductiveLogicProgrammer(
     
     def print_learning_statistics(self):
         """📊 Print Comprehensive Learning Statistics"""
-        print("\n📊 Learning Statistics:")
+        # Removed print spam: "\n...
         print("=" * 30)
         
         for stat_name, stat_value in self.learning_stats.items():
@@ -981,7 +981,7 @@ class InductiveLogicProgrammer(
     
     # Additional methods needed for compatibility with original implementation
     
-    def _analyze_coverage_comprehensive(self, hypothesis: LogicalClause, examples: List[Example]):
+    def simplified_analysis(self, hypothesis: LogicalClause, examples: List[Example]):
         """
         Analyze coverage of hypothesis on examples with comprehensive metrics
         

@@ -62,14 +62,14 @@ def create_test_data():
 
 def test_standalone_evaluation():
     """Test standalone semantic evaluation"""
-    print("🔍 Testing Standalone Semantic Evaluation")
+    # Removed print spam: "...
     print("=" * 50)
     
     hypothesis, pos_examples, neg_examples = create_test_data()
     
     # Test each semantic setting
     for setting in ['normal', 'definite', 'nonmonotonic']:
-        print(f"\n📊 {setting.upper()} Semantics:")
+        # Removed print spam: f"\n...} Semantics:")
         
         result = evaluate_semantic_quality(
             hypothesis, pos_examples, neg_examples,
@@ -234,8 +234,8 @@ def main():
         test_mixin_integration()
         test_complex_hypothesis()
         
-        print("\n✅ All tests completed successfully!")
-        print("\n💡 Key Insights:")
+        # Removed print spam: "\n...
+        # Removed print spam: "\n...
         print("   • Normal semantics focuses on consistency")
         print("   • Definite semantics emphasizes model correctness")
         print("   • Nonmonotonic semantics prioritizes minimality")

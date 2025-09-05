@@ -1,4 +1,29 @@
 """
+📋 Rule Refinement
+===================
+
+🎯 ELI5 Summary:
+This file is an important component in our AI research system! Like different organs 
+in your body that work together to keep you healthy, this file has a specific job that 
+helps the overall algorithm work correctly and efficiently.
+
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+📋 Component Integration:
+========================
+    ┌──────────┐
+    │   This   │
+    │Component │ ←→ Other Components
+    └──────────┘
+         ↑↓
+    System Integration
+
+"""
+"""
 Rule Refinement Module for Inductive Logic Programming
 
 This module implements rule refinement strategies for ILP systems,
@@ -300,7 +325,7 @@ class RuleRefinementMixin:
                 (metrics.accuracy > 0.9 and metrics.coverage < 3) or
                 (metrics.complexity > 5 and metrics.f1_score < 0.6))
     
-    def _specialize_clause_comprehensive(self, clause: LogicalClause,
+    def simplified_analysis(self, clause: LogicalClause,
                                        positive_examples: List[Example],
                                        negative_examples: List[Example]) -> List[LogicalClause]:
         """
@@ -350,7 +375,7 @@ class RuleRefinementMixin:
         # Filter based on semantic constraints and statistical significance
         return self._filter_specialized_clauses(specialized, positive_examples, negative_examples)
     
-    def _generalize_clause_comprehensive(self, clause: LogicalClause,
+    def simplified_analysis(self, clause: LogicalClause,
                                        positive_examples: List[Example],
                                        negative_examples: List[Example]) -> List[LogicalClause]:
         """

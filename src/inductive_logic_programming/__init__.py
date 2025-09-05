@@ -1,4 +1,21 @@
 """
+📋   Init  
+============
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+"""
+"""
 🧠 INDUCTIVE LOGIC PROGRAMMING - Research-Accurate ILP Implementation
 ===================================================================
 
@@ -6,9 +23,14 @@ Complete implementation of Inductive Logic Programming algorithms with full rese
 Includes FOIL (Quinlan 1990) and Progol (Muggleton 1995) with comprehensive configuration.
 
 🧠 Inductive Logic Programming Library - Made possible by Benedict Chen
-   benedict@benedictchen.com
-   Support his work: 🍺 Buy him a beer: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS
-   💖 Sponsor: https://github.com/sponsors/benedictchen
+   \033]8;;mailto:benedict@benedictchen.com\033\\benedict@benedictchen.com\033]8;;\033\\
+
+💰 PLEASE DONATE! Your support keeps this research alive! 💰
+   🔗 \033]8;;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WXQKYYKPHWXHS\033\\💳 CLICK HERE TO DONATE VIA PAYPAL\033]8;;\033\\
+   ❤️ \033]8;;https://github.com/sponsors/benedictchen\033\\💖 SPONSOR ON GITHUB\033]8;;\033\\
+
+   ☕ Buy me a coffee → 🍺 Buy me a beer → 🏎️ Buy me a Lamborghini → ✈️ Buy me a private jet!
+   (Start small, dream big! Every donation helps! 😄)
 
 📚 Research Foundation:
 - Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods."
@@ -85,9 +107,9 @@ rules = ilp.learn_rules("father")
 
 # Research-grade FOIL with full configuration
 from inductive_logic_programming.foil import FOILLearner
-from inductive_logic_programming.foil_comprehensive_config import create_research_accurate_config
+from inductive_logic_programming.foil_comprehensive_config import create_quinlan1990_config
 
-config = create_research_accurate_config()
+config = create_quinlan1990_config()
 foil = FOILLearner(config)
 rules = foil.learn_predicate(examples, background_knowledge)
 
@@ -159,7 +181,7 @@ from .ilp_core import (
 )
 
 # Import all modules for backward compatibility
-from .ilp_modules import *
+from .inductive_logic_programming_modules import *
 
 # Import recovered core algorithms
 # Import module groups
@@ -170,7 +192,6 @@ from . import rule_refinement
 # Import the main classes directly
 from .foil import FOILLearner
 from .progol import ProgolSystem
-print("✅ Connected to REAL FOIL and Progol implementations!")
 
 __version__ = "2.0.0"
 __author__ = "Benedict Chen"

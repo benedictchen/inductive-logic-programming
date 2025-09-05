@@ -149,7 +149,7 @@ def demonstrate_comprehensive_learning():
     try:
         learned_rules = ilp.learn_rules("grandparent")
         
-        print(f"\n✅ Successfully learned {len(learned_rules)} rules!")
+        # Removed print spam: f"\n...} rules!")
         
         # Display learned rules
         ilp.print_learned_rules()
@@ -165,7 +165,7 @@ def demonstrate_comprehensive_learning():
 
 def demonstrate_query_system(ilp, learned_rules):
     """Demonstrate query answering and explanation system"""
-    print("\n🔍 QUERY SYSTEM DEMONSTRATION")  
+    # Removed print spam: "\n...  
     print("=" * 35)
     
     if not learned_rules:
@@ -227,15 +227,15 @@ def demonstrate_modular_architecture():
             self.learning_stats = {'clauses_generated': 0}
             
     custom_system = CustomILP()
-    print(f"✅ Created custom ILP system with only HypothesisGeneration and Unification mixins")
+    # Removed print spam: f"...
     print(f"   Available methods: {[method for method in dir(custom_system) if method.startswith('_generate') or method.startswith('_robinson')]}")
     
     # Show full system capabilities
     full_system = InductiveLogicProgrammer()
     mixin_count = len([cls for cls in InductiveLogicProgrammer.__mro__ if 'Mixin' in cls.__name__])
-    print(f"✅ Full ILP system integrates {mixin_count} specialized mixins")
+    # Removed print spam: f"...
     
-    print("\n📊 Vocabulary tracking demonstration:")
+    # Removed print spam: "\n...
     full_system.add_example(create_atom("loves", [create_constant("alice"), create_constant("pizza")]), True)
     full_system.add_example(create_atom("parent", [create_variable("X"), create_variable("Y")]), True)
     
@@ -262,18 +262,18 @@ def demonstrate_backward_compatibility():
     }
     
     ilp_original_style = InductiveLogicProgrammer(**original_params)
-    print("✅ Original initialization style works")
+    # # Removed print spam: "...
     
     # Test original method calls
     example_atom = create_atom("test", [create_constant("a"), create_constant("b")])
     ilp_original_style.add_example(example_atom, True)
-    print("✅ Original add_example() method works")
+    # # Removed print spam: "... method works")
     
     fact = create_fact(create_atom("knows", [create_constant("alice"), create_constant("bob")]))
     ilp_original_style.add_background_knowledge(fact)
-    print("✅ Original add_background_knowledge() method works")
+    # # Removed print spam: "... method works")
     
-    print("✅ All original API methods maintained!")
+    # # Removed print spam: "...
 
 def main():
     """Main demonstration orchestrator"""
@@ -294,19 +294,19 @@ def main():
         
         demonstrate_backward_compatibility()
         
-        print("\n🎉 DEMONSTRATION COMPLETE!")
+        # Removed print spam: "\n...
         print("=" * 30)
-        print("✅ All modular ILP components working perfectly!")
-        print("✅ Full backward compatibility maintained")
-        print("✅ Enhanced functionality through factory functions")
-        print("✅ Clean separation of concerns via mixins") 
-        print("✅ Comprehensive learning and query capabilities")
+        # # Removed print spam: "...
+        # # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "... 
+        # # Removed print spam: "...
         
-        print("\n💡 Ready for:")
+        # Removed print spam: "\n...
         print("   📚 Educational use with create_educational_ilp()")
         print("   🔬 Research applications with create_research_ilp_system()")
         print("   🏭 Production deployment with create_production_ilp()")
-        print("   🔧 Custom systems with individual mixins")
+        # Removed print spam: "   ...
         
     except Exception as e:
         print(f"❌ Demonstration encountered error: {e}")

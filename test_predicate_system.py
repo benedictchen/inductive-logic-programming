@@ -40,7 +40,7 @@ class TestPredicateSystem(PredicateSystemMixin):
         # Initialize the predicate system
         self._initialize_predicate_system()
         
-        print("🚀 Test Predicate System initialized")
+        # # Removed print spam: "...
         
 
 def test_vocabulary_extraction():
@@ -80,9 +80,9 @@ def test_vocabulary_extraction():
     # Test vocabulary extraction
     system._update_vocabulary_from_clause(test_clause)
     
-    print(f"✅ Extracted predicates: {system.predicates}")
-    print(f"✅ Extracted constants: {system.constants}")
-    print(f"✅ Extracted functions: {system.functions}")
+    # Removed print spam: f"...
+    # Removed print spam: f"...
+    # Removed print spam: f"...
     
     # Test with constants and functions
     print("\nTesting with constants and functions...")
@@ -108,9 +108,9 @@ def test_vocabulary_extraction():
     
     system._update_vocabulary_from_atom(function_atom)
     
-    print(f"✅ Updated predicates: {system.predicates}")
-    print(f"✅ Updated constants: {system.constants}")
-    print(f"✅ Updated functions: {system.functions}")
+    # Removed print spam: f"...
+    # Removed print spam: f"...
+    # Removed print spam: f"...
 
 
 def test_predicate_compatibility():
@@ -124,39 +124,39 @@ def test_predicate_compatibility():
     # Test direct compatibility
     print("Testing direct compatibility...")
     assert system._predicates_compatible("parent", "parent") == True
-    print("✅ Direct match: parent ↔ parent")
+    # # Removed print spam: "...
     
     # Test alias compatibility
     print("\nTesting alias compatibility...")
     assert system._predicates_compatible("father", "parent") == True
     assert system._predicates_compatible("mother", "parent") == True
     assert system._predicates_compatible("son", "child") == True
-    print("✅ Alias compatibility: father → parent, mother → parent, son → child")
+    # # Removed print spam: "...
     
     # Test hierarchy compatibility
     print("\nTesting hierarchy compatibility...")
     assert system._predicates_compatible("male", "female") == True  # Both in 'person'
     assert system._predicates_compatible("parent", "grandparent") == True  # Both in 'relation'
     assert system._predicates_compatible("tall", "short") == True  # Both in 'property'
-    print("✅ Hierarchy compatibility: male ↔ female (person), parent ↔ grandparent (relation)")
+    # # Removed print spam: "..., parent ↔ grandparent (relation)")
     
     # Test equivalence compatibility
     print("\nTesting equivalence compatibility...")
     assert system._predicates_compatible("spouse", "married") == True
     assert system._predicates_compatible("friend", "friend") == True
-    print("✅ Equivalence compatibility: spouse ↔ married, friend ↔ friend")
+    # # Removed print spam: "...
     
     # Test incompatibility
     print("\nTesting incompatible predicates...")
     assert system._predicates_compatible("parent", "house") == False
     assert system._predicates_compatible("happy", "tree") == False
-    print("✅ Correctly identified incompatible predicates")
+    # # Removed print spam: "...
 
 
 def test_predicate_system_management():
     """Test adding and managing predicate system components"""
     
-    print("\n🔧 Testing Predicate System Management")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     system = TestPredicateSystem()
@@ -171,7 +171,7 @@ def test_predicate_system_management():
     assert system._predicates_compatible("dad", "parent") == True
     assert system._predicates_compatible("mom", "father") == True  # Both resolve to parent
     assert system._predicates_compatible("client", "customer") == True
-    print("✅ Custom aliases working correctly")
+    # # Removed print spam: "...
     
     # Test adding custom equivalences
     print("\nAdding custom equivalences...")
@@ -181,7 +181,7 @@ def test_predicate_system_management():
     # Verify equivalences work
     assert system._predicates_compatible("colleague", "coworker") == True
     assert system._predicates_compatible("intelligent", "smart") == True
-    print("✅ Custom equivalences working correctly")
+    # # Removed print spam: "...
     
     # Test adding custom hierarchies
     print("\nAdding custom hierarchies...")
@@ -192,13 +192,13 @@ def test_predicate_system_management():
     assert system._predicates_compatible("dog", "cat") == True  # Both in 'animal'
     assert system._predicates_compatible("red", "blue") == True  # Both in 'color'
     assert system._predicates_compatible("dog", "red") == False  # Different hierarchies
-    print("✅ Custom hierarchies working correctly")
+    # # Removed print spam: "...
 
 
 def test_theta_subsumption():
     """Test theta-subsumption functionality"""
     
-    print("\n🎯 Testing Theta-Subsumption")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     system = TestPredicateSystem()
@@ -240,11 +240,11 @@ def test_theta_subsumption():
     print(f"Specific clause: {specific_clause}")
     
     subsumes = system.theta_subsumes(general_clause, specific_clause)
-    print(f"✅ Theta-subsumption result: {subsumes}")
+    # Removed print spam: f"...
     
     # Test reverse (should be False)
     reverse_subsumes = system.theta_subsumes(specific_clause, general_clause)
-    print(f"✅ Reverse subsumption (should be False): {reverse_subsumes}")
+    # Removed print spam: f"...: {reverse_subsumes}")
     
     # Test Case 2: Variable extraction
     print("\nTesting variable extraction...")
@@ -268,7 +268,7 @@ def test_theta_subsumption():
 def test_vocabulary_reporting():
     """Test vocabulary reporting and system management"""
     
-    print("\n📊 Testing Vocabulary Reporting")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     system = TestPredicateSystem()
@@ -299,10 +299,10 @@ def test_vocabulary_reporting():
             print(f"  {category.upper()}: None")
 
 
-def test_advanced_features():
+def test_complex_features():
     """Test advanced predicate system features"""
     
-    print("\n🚀 Testing Advanced Features")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     system = TestPredicateSystem()
@@ -347,7 +347,7 @@ def test_advanced_features():
     assert system._predicates_compatible("physician", "doctor") == True
     assert system._predicates_compatible("staff", "manager") == True
     
-    print("✅ Advanced domain hierarchies working correctly")
+    # # Removed print spam: "...
     
     # Test system clearing
     print("\nTesting system clearing...")
@@ -356,13 +356,13 @@ def test_advanced_features():
     
     print(f"Predicates before clearing: {original_predicates}")
     print(f"Predicates after clearing: {len(system.predicates)}")
-    print("✅ System clearing working correctly")
+    # # Removed print spam: "...
 
 
 def demonstrate_practical_usage():
     """Demonstrate practical usage patterns"""
     
-    print("\n💡 Practical Usage Demonstration")
+    # Removed print spam: "\n...
     print("=" * 50)
     
     system = TestPredicateSystem()
@@ -464,11 +464,11 @@ def run_all_tests():
         test_advanced_features()
         demonstrate_practical_usage()
         
-        print("\n🎉 Predicate system testing complete")
+        # Removed print spam: "\n...
         print("=" * 70)
-        print("✅ Predicate system module is working correctly")
-        print("✅ All key features validated")
-        print("✅ Ready for integration with main ILP system")
+        # # Removed print spam: "...
+        # # Removed print spam: "...
+        # # Removed print spam: "...
         
     except Exception as e:
         print(f"\n❌ TEST FAILED: {e}")

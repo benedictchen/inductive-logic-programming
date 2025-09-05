@@ -1,4 +1,30 @@
 """
+📋 Foil Research Accurate
+==========================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+📋 Component Integration:
+========================
+    ┌──────────┐
+    │   This   │
+    │Component │ ←→ Other Components
+    └──────────┘
+         ↑↓
+    System Integration
+
+"""
+"""
 🎯 FOIL QUINLAN 1990 IMPLEMENTATION
 ============================================================
 
@@ -51,7 +77,7 @@ from collections import defaultdict
 import time
 
 from .foil_comprehensive_config import (
-    FOILComprehensiveConfig, 
+    FOILConfig, 
     InformationGainMethod,
     VariableBindingStrategy,
     CoverageTestingMethod,
@@ -95,7 +121,7 @@ class ResearchAccurateFOILLearner:
     choose between different research-based approaches for each component.
     """
     
-    def __init__(self, config: Optional[FOILComprehensiveConfig] = None):
+    def __init__(self, config: Optional[FOILConfig] = None):
         """
         Initialize research-accurate FOIL learner.
         
@@ -198,14 +224,14 @@ class ResearchAccurateFOILLearner:
         self.logger.info(f"✅ Learned {len(learned_rules)} research-accurate rules")
         return learned_rules
     
-    def _learn_single_clause_research_accurate(self, 
+    def _learn_single_clause(self, 
                                              target_predicate: str,
                                              pos_examples: List[Example],
                                              neg_examples: List[Example]) -> Optional[LogicalClause]:
         """
-        Learn single clause using research-accurate methods.
+        Learn single clause using FOIL algorithm.
         
-        This implements research-based methods for proper clause learning.
+        Implements Quinlan's FOIL clause learning with information gain.
         """
         # Initialize clause with proper variable structure
         head_arity = self._get_predicate_arity(target_predicate)
@@ -577,13 +603,13 @@ class ResearchAccurateFOILLearner:
     
     def print_learning_statistics(self):
         """Print comprehensive learning statistics."""
-        print("\n📊 Research-Accurate FOIL Learning Statistics:")
+        # Removed print spam: "\n...
         for key, value in self.learning_statistics.items():
             print(f"   {key.replace('_', ' ').title()}: {value}")
 
 
 # Factory function for easy usage
-def create_research_accurate_foil(config: Optional[FOILComprehensiveConfig] = None) -> ResearchAccurateFOILLearner:
+def create_research_accurate_foil(config: Optional[FOILConfig] = None) -> ResearchAccurateFOILLearner:
     """
     Create a research-accurate FOIL learner with comprehensive configuration.
     

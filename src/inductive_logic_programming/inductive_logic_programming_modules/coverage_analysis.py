@@ -1,4 +1,35 @@
 """
+📋 Coverage Analysis
+=====================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🎯 ELI5 Summary:
+This file is an important component in our AI research system! Like different organs 
+in your body that work together to keep you healthy, this file has a specific job that 
+helps the overall algorithm work correctly and efficiently.
+
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+📋 Component Integration:
+========================
+    ┌──────────┐
+    │   This   │
+    │Component │ ←→ Other Components
+    └──────────┘
+         ↑↓
+    System Integration
+
+"""
+"""
 Coverage Analysis Module for Inductive Logic Programming
 ======================================================
 
@@ -215,7 +246,7 @@ class CoverageAnalysisMixin:
         return (clause.head.predicate == example_atom.predicate and 
                 len(clause.head.terms) == len(example_atom.terms))
     
-    def calculate_comprehensive_metrics(self, clause: LogicalClause, 
+    def simplified_analysis_metrics(self, clause: LogicalClause, 
                                       positive_examples: List[Example],
                                       negative_examples: List[Example]) -> CoverageMetrics:
         """
@@ -695,13 +726,13 @@ class CoverageAnalysisMixin:
     
     def print_coverage_analysis_summary(self, report: CoverageAnalysisReport):
         """Print formatted coverage analysis summary"""
-        print(f"\n📊 Coverage Analysis Report")
+        # Removed print spam: f"\n...
         print("=" * 50)
         print(f"Rule: {report.rule}")
         print(f"Coverage Strategy: {report.coverage_strategy_used}")
         
         metrics = report.metrics
-        print(f"\n📈 Performance Metrics:")
+        # Removed print spam: f"\n...
         print(f"   • Precision: {metrics.precision:.3f}")
         print(f"   • Recall: {metrics.recall:.3f}")
         print(f"   • F1-Score: {metrics.f1_score:.3f}")
@@ -724,7 +755,7 @@ class CoverageAnalysisMixin:
         print(f"   • 95% CI: ({metrics.confidence_interval[0]:.3f}, {metrics.confidence_interval[1]:.3f})")
         
         if report.strengths:
-            print(f"\n✅ Strengths:")
+            # Removed print spam: f"\n...
             for strength in report.strengths:
                 print(f"   • {strength}")
         
@@ -734,13 +765,13 @@ class CoverageAnalysisMixin:
                 print(f"   • {weakness}")
         
         if report.recommendations:
-            print(f"\n💡 Recommendations:")
+            # Removed print spam: f"\n...
             for rec in report.recommendations:
                 print(f"   • {rec}")
     
     def print_coverage_statistics(self):
         """Print coverage analysis statistics"""
-        print(f"\n📊 Coverage Analysis Statistics:")
+        # Removed print spam: f"\n...
         print(f"   • Total coverage calculations: {self.coverage_stats['total_coverage_calculations']}")
         print(f"   • Statistical tests performed: {self.coverage_stats['statistical_tests_performed']}")
         print(f"   • Significant rules found: {self.coverage_stats['significant_rules_found']}")

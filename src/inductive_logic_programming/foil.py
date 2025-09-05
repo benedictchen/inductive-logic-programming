@@ -303,10 +303,10 @@ from .ilp_core import (
     InductiveLogicProgrammer
 )
 from .foil_comprehensive_config import (
-    FOILComprehensiveConfig, 
+    FOILConfig, 
     InformationGainMethod,
     CoverageTestingMethod,
-    create_research_accurate_config,
+    create_quinlan1990_config,
     create_fast_approximation_config
 )
 from .foil_algorithm_variants import FOILAlgorithmVariants
@@ -342,7 +342,7 @@ class FOILLearner:
                  max_variables: int = 4,
                  enable_negation: bool = True,
                  pruning_threshold: float = 0.05,
-                 foil_config: Optional[FOILComprehensiveConfig] = None):
+                 foil_config: Optional[FOILConfig] = None):
         """
         Initialize FOIL learner
         

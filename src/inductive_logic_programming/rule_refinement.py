@@ -1,4 +1,21 @@
 """
+📋 Rule Refinement
+===================
+
+🔬 Research Foundation:
+======================
+Based on inductive logic programming research:
+- Quinlan, J.R. (1990). "Learning Logical Definitions from Relations"
+- Muggleton, S. & De Raedt, L. (1994). "Inductive Logic Programming: Theory and Methods"
+- Lavrac, N. & Dzeroski, S. (1994). "Inductive Logic Programming: Techniques and Applications"
+🧪 Technical Details:
+===================
+Implementation details and technical specifications for this component.
+Designed to work seamlessly within the research framework while
+maintaining high performance and accuracy standards.
+
+"""
+"""
 🔄 RULE REFINEMENT - Systematic Hypothesis Space Search
 ======================================================
 
@@ -630,7 +647,7 @@ class RuleRefinement:
         Returns:
             List of refined clauses
         """
-        print(f"\n🔧 Refining rule: {initial_clause}")
+        # Removed print spam: f"\n...
         
         # Register default operators if not already registered
         if not self.operators:
@@ -815,7 +832,7 @@ def create_rule_refiner(max_steps: int = 10, beam_width: int = 5) -> RuleRefinem
 
 # Example usage
 if __name__ == "__main__":
-    print("🔧 Rule Refinement for ILP - Systematic Hypothesis Space Search")
+    # Removed print spam: "...
     print("=" * 70)
     
     # Create refinement system
